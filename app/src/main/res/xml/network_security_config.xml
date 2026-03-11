@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <!-- 允许你要访问的服务器IP/域名的明文请求 -->
+        <domain includeSubdomains="true">47.118.22.220</domain>
+        <!-- 如果有其他域名/IP需要明文访问，继续添加 -->
+        <!-- <domain includeSubdomains="true">your-other-domain.com</domain> -->
+    </domain-config>
+</network-security-config>
