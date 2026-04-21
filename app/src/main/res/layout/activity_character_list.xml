@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/character_background"
+    tools:context=".CharacterListActivity">
+
+    <!-- TopAppBar -->
+    <include layout="@layout/top_app_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="80dp"
+            android:paddingBottom="120dp">
+
+            <!-- Hero Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp"
+                android:layout_marginBottom="48dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/featured_collection"
+                    android:textColor="@color/character_secondary"
+                    android:textSize="10sp"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.1"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/curated_personalities"
+                    android:textColor="@color/character_on_surface"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:lineHeight="38sp" />
+
+            </LinearLayout>
+
+            <!-- Horizontal Scrollable Card List -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <!-- Card 1 - Evelyn -->
+                    <include
+                        layout="@layout/item_character_card"
+                        android:id="@+id/card_evelyn"
+                        android:layout_width="192dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp" />
+
+                    <!-- Card 2 - Marcus -->
+                    <include
+                        layout="@layout/item_character_card"
+                        android:id="@+id/card_marcus"
+                        android:layout_width="192dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp" />
+
+                    <!-- Card 3 - Sophia -->
+                    <include
+                        layout="@layout/item_character_card"
+                        android:id="@+id/card_sophia"
+                        android:layout_width="192dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp" />
+
+                    <!-- Card 4 - Julian -->
+                    <include
+                        layout="@layout/item_character_card"
+                        android:id="@+id/card_julian"
+                        android:layout_width="192dp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <!-- Bottom Prompt -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="48dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp">
+
+                <View
+                    android:layout_width="32dp"
+                    android:layout_height="1dp"
+                    android:background="@color/character_outline_variant"
+                    android:alpha="0.3" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/scroll_hint"
+                    android:textColor="@color/character_secondary"
+                    android:textSize="10sp"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.2"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp" />
+
+                <View
+                    android:layout_width="32dp"
+                    android:layout_height="1dp"
+                    android:background="@color/character_outline_variant"
+                    android:alpha="0.3" />
+
+            </LinearLayout>
+
+            <!-- Secondary Narrative Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="80dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/bg_narrative_card"
+                android:padding="32dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/art_of_story"
+                    android:textColor="@color/character_on_surface"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/narrative_description"
+                    android:textColor="@color/character_on_surface_variant"
+                    android:textSize="14sp"
+                    android:lineHeight="22sp"
+                    android:alpha="0.8" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

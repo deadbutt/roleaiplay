@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/home_back"
+    tools:context=".LoginActivity">
+
+    <include layout="@layout/top_use_all"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/register_home_3"
+                android:textColor="@color/text_black"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="12dp"
+                android:textSize="40sp"/>
+
+            <!--输入email-->
+            <LinearLayout
+                android:id="@+id/li_login_home_email"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/xml_white_circle_back"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/icon_register_home_email"/>
+
+                <EditText
+                    android:id="@+id/cet_login_home_email"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/text_black"
+                    android:gravity="center_vertical"
+                    android:background="@null"
+                    android:hint="@string/register_home_9"
+                    android:textColorHint="#66131F27"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="20dp"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <!--输入密码-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/xml_white_circle_back"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/icon_login_main_pass"/>
+
+                <EditText
+                    android:id="@+id/cet_login_password_1"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/text_black"
+                    android:gravity="center_vertical"
+                    android:background="@null"
+                    android:hint="@string/register_password_3"
+                    android:textColorHint="#66131F27"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="8dp"
+                    android:textSize="16sp"/>
+
+                <ImageView
+                    android:id="@+id/iv_login_password_show_1"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginEnd="20dp"
+                    android:padding="8dp"
+                    android:src="@drawable/icon_register_password_1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/li_login_home_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="12dp"
+                android:padding="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_login_home_select"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/icon_register_home_not"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/register_home_10"
+                        android:textSize="12sp"
+                        android:layout_marginStart="6dp"
+                        android:textColor="#66131F27"/>
+
+                    <TextView
+                        android:id="@+id/ctv_register_home_policy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/register_home_1"
+                        android:textSize="12sp"
+                        android:layout_marginStart="6dp"
+                        android:textColor="#131F27"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:visibility="invisible"
+                        android:src="@drawable/icon_register_home_not"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/register_home_11"
+                        android:textSize="12sp"
+                        android:layout_marginStart="6dp"
+                        android:textColor="#66131F27"/>
+
+                    <TextView
+                        android:id="@+id/ctv_login_home_agreement"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/register_home_2"
+                        android:textSize="12sp"
+                        android:layout_marginStart="6dp"
+                        android:textColor="#131F27"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/ctv_login_home_submit"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:text="@string/register_code_5"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:textColor="@color/gray_button_back"
+                android:layout_marginTop="20dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/xml_login_button_gray_back"/>
+
+            <TextView
+                android:id="@+id/ctv_login_home_forget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_main_3"
+                android:textSize="12sp"
+                android:layout_marginTop="19dp"
+                android:padding="10dp"
+                android:textColor="#131F27"/>
+
+            <!-- 底部注册链接 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_main_2"
+                    android:textSize="12sp"
+                    android:layout_marginStart="6dp"
+                    android:textColor="#66131F27"/>
+
+                <TextView
+                    android:id="@+id/ctv_login_home_create"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_main_1"
+                    android:textSize="12sp"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="#131F27"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

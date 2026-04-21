@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--    规定长宽-->
+    <item >
+        <!--        绘制形状为矩形-->
+        <shape android:shape="rectangle">
+            <!--            绘制梯度为线性，灰色渐变色-->
+            <gradient
+                android:useLevel="true"
+                android:startColor="#1A131F27"
+                android:endColor="#1A131F27"
+                android:angle="90" />
+
+            <!--            四个折角的位置-->
+            <corners
+                android:radius="99dp"/>
+        </shape>
+    </item>
+
+</layer-list>

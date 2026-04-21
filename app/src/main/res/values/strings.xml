@@ -1,3 +1,363 @@
-<resources>
-    <string name="app_name">iot</string>
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Iot设备管理</string>
+    <string name="title_activity_login_home">LoginHomeActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+
+    <string name="register_code_1">Resend </string>
+    <string name="register_code_2">Email\nVerification</string>
+    <string name="register_code_3">erification code will be sent to</string>
+    <string name="register_code_4">Verification code expires in 5 minutes.</string>
+    <string name="register_code_5">Confirm</string>
+
+    <string name="register_home_1">Privacy Policy</string>
+    <string name="register_home_2">User Agreement</string>
+    <string name="register_home_3">Log in</string>
+    <string name="register_home_4">请输入正确的邮箱</string>
+    <string name="register_home_5">请勾选隐私政策和用户协议</string>
+    <string name="register_home_6">Create\nan Account</string>
+    <string name="register_home_7">Select your country/region and enter your email</string>
+    <string name="register_home_8">United States</string>
+    <string name="register_home_9">Enter Your Email</string>
+    <string name="register_home_10">I have read and understood the</string>
+    <string name="register_home_11">and agree to the</string>
+    <string name="register_home_12">Next</string>
+    <string name="register_home_13">Already have an account?</string>
+
+    <string name="register_select_country_1">Select country/Region</string>
+    <string name="register_select_country_2">Save</string>
+
+    <string name="register_password_1">Set Password</string>
+    <string name="register_password_2">Please set your password and re-enter it to confirm.</string>
+    <string name="register_password_3">Enter Password</string>
+    <string name="register_password_4">Confirm Password</string>
+    <string name="register_password_5">Passwords do not match</string>
+    <string name="register_password_6">两次输入的密码不一致</string>
+    <string name="register_password_7">请输入6-18位密码</string>
+
+    <string name="login_main_1">Create One</string>
+    <string name="login_main_2">Do not have an account?</string>
+    <string name="login_main_3">Fotgot Password?</string>
+    <string name="login_main_4">Email OTP Login</string>
+    <string name="login_main_5">Password Login</string>
+    <string name="login_main_6">Email Login</string>
+    <string name="login_main_7">We will send a verification code to your email</string>
+
+    <string name="forget_password_1">Fotgot Password</string>
+    <string name="forget_password_2">Enter Email</string>
+    <string name="forget_password_3">We will send the verification code to your email</string>
+    <string name="forget_password_4">Invalid email format</string>
+    <string name="forget_password_5">Set\nNew Password</string>
+    <string name="forget_password_6">Please set your password and re-enter it to confirm.</string>
+    <string name="forget_password_7">Enter New Password</string>
+    <string name="forget_password_8">Change Password</string>
+
+    <string name="device_blueth_1">Connect devices</string>
+    <string name="device_blueth_2">Searching...</string>
+    <string name="device_blueth_3">Keep your device powered on\nPhone Bluetooth is enabled\nPlace your phone near the device</string>
+    <string name="device_blueth_4">No Device Found!</string>
+    <string name="device_blueth_5">Please check:\nYour device powered on\nPhone Bluetooth is enabled\nYour phone near the device</string>
+    <string name="device_blueth_6">Try Again</string>
+    <string name="device_blueth_7">Connect</string>
+    <string name="device_blueth_8">Cancel</string>
+    <string name="device_blueth_9">BluetaniX HydriX 2S</string>
+    <string name="device_blueth_10">device connecting</string>
+    <string name="device_blueth_11">No Device Link Failed !</string>
+
+    <string name="link_guide_device_1">Connect devices</string>
+    <string name="link_guide_device_2">Confirm that the device is powered on</string>
+    <string name="link_guide_device_3">Press and hold "switch" 、 "max+" for 5 seconds. Once the LED indicator flashes, the device enters the network configuration</string>
+
+    <string name="network_configuration_1">Network Configuration</string>
+    <string name="network_configuration_2">Enter the new home Wi-Fi information, then tap "Confirm" to apply the changes</string>
+    <string name="network_configuration_3">Supports only 2.4GHz Wi-Fi</string>
+    <string name="network_configuration_4">Enter Wi-Fi Name</string>
+    <string name="network_configuration_5">Continue</string>
+
+    <string name="connect_network_1">Connection failed</string>
+    <string name="connect_network_2">Connecting to network ...</string>
+    <string name="connect_network_3">Connect finished</string>
+    <string name="connect_network_4">Please verify that you have entered\nthe correct Wi-Fi password</string>
+    <string name="connect_network_5">Start</string>
+    <string name="connect_network_6">Try Again</string>
+    <string name="connect_network_7">next 1/2</string>
+    <string name="connect_network_8">next 2/2</string>
+    <string name="connect_network_9">配网成功</string>
+    <string name="connect_network_10">该设备已被他人绑定</string>
+
+    <string name="home_page_main">+ Add Product</string>
+    <string name="home_page_main_2">Enter</string>
+    <string name="home_page_main_3">Online</string>
+    <string name="home_page_main_4">Offline</string>
+
+    <string name="device_detail_1">Stand by</string>
+    <string name="device_detail_2">Map</string>
+    <string name="device_detail_3">Area</string>
+
+    <string name="blueth_mode_1">Standard Mode</string>
+    <string name="blueth_mode_standard_1">Normal</string>
+
+    <string name="mode_choose_mode_1">Mode Choose</string>
+    <string name="mode_choose_mode_2">Standard Mode</string>
+    <string name="mode_choose_mode_3">Floor + Wall + Waterline\nmulti-clean mode</string>
+    <string name="mode_choose_mode_4">Preference</string>
+    <string name="mode_choose_mode_5">ECO</string>
+    <string name="mode_choose_mode_6">Normal</string>
+    <string name="mode_choose_mode_7">Turbo</string>
+    <string name="mode_choose_mode_8">Normal gear will take average cleaning time.</string>
+    <string name="mode_choose_mode_9">Floor single clean mode</string>
+    <string name="mode_choose_mode_10">Floor Mode</string>
+    <string name="mode_choose_mode_11">Wall Mode</string>
+    <string name="mode_choose_mode_12">Wall single clean mode</string>
+    <string name="mode_choose_mode_13">Waterline Mode</string>
+    <string name="mode_choose_mode_14">Wall single clean mode</string>
+    <string name="mode_choose_mode_15">Max+ Mode</string>
+    <string name="mode_choose_mode_16">murky water clean mode</string>
+    <string name="mode_choose_mode_17">Round Time Set</string>
+    <string name="mode_choose_mode_18">5min</string>
+    <string name="mode_choose_mode_19">10min</string>
+    <string name="mode_choose_mode_20">15min</string>
+    <string name="mode_choose_mode_21">Area Mode</string>
+    <string name="mode_choose_mode_22">Floor area | edge clean mode</string>
+
+    <string name="device_more_1">More</string>
+    <string name="device_more_2">Modify Product Name</string>
+    <string name="device_more_3">Product Name</string>
+    <string name="device_more_4">Task Record</string>
+    <string name="device_more_5">Retrieval Set</string>
+    <string name="device_more_6">Consumable Mgmt</string>
+    <string name="device_more_7">Device Information</string>
+    <string name="device_more_8">Friendly Reminder?</string>
+    <string name="device_more_9">Are you sure to unbind the device? After unbinding, the device cannot be used, and you will need to rebind it for further use.</string>
+    <string name="device_more_10">解绑成功</string>
+    <string name="device_more_11">Confirm Clear History ?</string>
+    <string name="device_more_12">This action will permanently delete all historical data (including task records, time/area statistics). The data cannot be recovered after deletion. Are you sure you want to proceed?</string>
+    <string name="device_more_13">Edit</string>
+    <string name="device_more_14">Retrieve Point</string>
+    <string name="device_more_15">Random</string>
+    <string name="device_more_16">Waiting Time</string>
+    <string name="device_more_17">10min</string>
+    <string name="device_more_18">Done</string>
+    <string name="device_more_19">Setting up...</string>
+    <string name="device_more_20">5min</string>
+    <string name="device_more_21">Devices</string>
+    <string name="device_more_22">Add Accessories</string>
+    <string name="device_more_23">Connected Accessories</string>
+    <string name="device_more_24">Available Accessories</string>
+    <string name="device_more_25">Successful</string>
+    <string name="device_more_26">Disconnect</string>
+
+    <string name="mine_main_1">NickName</string>
+    <string name="mine_main_2">example@xxx.com</string>
+    <string name="mine_main_3">ID: DXSANDBQEFQH</string>
+    <string name="mine_main_4">Message\nCenter</string>
+    <string name="mine_main_5">Support\nassistance</string>
+    <string name="mine_main_6">Account\nManagement</string>
+    <string name="mine_main_7">Setting</string>
+    <string name="mine_main_8">Privacy、Security</string>
+    <string name="mine_main_9">About Us</string>
+    <string name="mine_main_10">Encourage Us</string>
+    <string name="mine_main_11">Check for Update</string>
+    <string name="mine_main_12">Current Version</string>
+    <string name="mine_main_13">Account  Management</string>
+    <string name="mine_main_14">Country/Region</string>
+    <string name="mine_main_15">Account Cancellation</string>
+    <string name="mine_main_16">Change Country</string>
+    <string name="mine_main_17">Change Email</string>
+    <string name="mine_main_18">Personal Information</string>
+    <string name="mine_main_19">Acatar</string>
+    <string name="mine_main_20">Nickname</string>
+    <string name="mine_main_21">Input Nickname</string>
+    <string name="mine_main_22">拍照</string>
+    <string name="mine_main_23">从手机相册选择</string>
+    <string name="mine_main_24">New\nemail address</string>
+    <string name="mine_main_25">Current Account is Bound to this Email:</string>
+    <string name="mine_main_26">To change your email, enter a new email below and verify.</string>
+    <string name="mine_main_27">Account\nVerification</string>
+    <string name="mine_main_28">Tap to have the verification code sent to the email below.</string>
+    <string name="mine_main_29">Account\nVerification</string>
+    <string name="mine_main_30">Tap to have the verification code sent to the email below.</string>
+    <string name="mine_main_31">Can not receive verification code?</string>
+    <string name="mine_main_32">Verification code will be sent to</string>
+    <string name="mine_main_33">Reminder</string>
+    <string name="mine_main_34">Password changed successfully.\nPlease log in with the new password.</string>
+    <string name="mine_main_35">Log in again</string>
+    <string name="mine_main_36">Dear user,\nIf you confirm this request, your\naccount will be deactivated in 7\ndays,
+        and your personal date will\nbe deleted. To retract the\ncancellation, simply log back into\nthe App before the deadline to\ncancel the process.\nAre you sure you want to proceed?</string>
+    <string name="mine_main_37">Log Out</string>
+    <string name="mine_main_38">Are you sure\nyou want to log out?</string>
+    <string name="mine_main_39">Support</string>
+    <string name="mine_main_40">Verification</string>
+    <string name="mine_main_50">After-sales</string>
+    <string name="mine_main_51">LiveChat</string>
+    <string name="mine_main_52">Contact Number</string>
+    <string name="mine_main_53">Email Address</string>
+    <string name="mine_main_54">Authentication</string>
+    <string name="mine_main_55">Enter serial number to verify official origin.</string>
+    <string name="mine_main_56">Warranty</string>
+    <string name="mine_main_57">Enter order info and serial number to check warranty.</string>
+    <string name="mine_main_58">Enter product SN</string>
+    <string name="mine_main_59">Enter</string>
+    <string name="mine_main_60">Enter order number</string>
+    <string name="mine_main_61">Message Setting</string>
+    <string name="mine_main_62">Language</string>
+    <string name="mine_main_63">English</string>
+    <string name="mine_main_64">Unit Settings</string>
+    <string name="mine_main_65">Clear Cache</string>
+    <string name="mine_main_66">Time Format</string>
+    <string name="mine_main_67">12-hour format</string>
+    <string name="mine_main_68">24-hour format</string>
+    <string name="mine_main_69">Temperature Unit</string>
+    <string name="mine_main_70">Measurement System</string>
+    <string name="mine_main_71">Metric Units</string>
+    <string name="mine_main_72">Do you want to clear all cache?</string>
+    <string name="mine_main_73">US</string>
+    <string name="mine_main_74">Imperial Units</string>
+    <string name="mine_main_75">Switch units</string>
+    <string name="mine_main_76">Change Language</string>
+    <string name="mine_main_77">Notification Permission</string>
+    <string name="mine_main_78">System notification permissions are not enabled, and you may miss important information. Please go to Settings - Allow Notifications to enable this permission</string>
+    <string name="mine_main_79">System Notification</string>
+    <string name="mine_main_80">Devices Notification</string>
+    <string name="mine_main_81">Device-related messages such as device alarms,task status, firmware updates</string>
+    <string name="mine_main_82">System messages such as app version updates, protocol updates</string>
+    <string name="mine_main_83">Notification Settings</string>
+    <string name="mine_main_84">Notification Settings</string>
+    <string name="mine_main_85">Legal Information</string>
+    <string name="mine_main_86">Privacy Notice</string>
+    <string name="mine_main_87">User Experience Program</string>
+    <string name="mine_main_88">System Permissions</string>
+    <string name="mine_main_89">Enabled</string>
+    <string name="mine_main_90">Bluetooth</string>
+    <string name="mine_main_91">Access Photos</string>
+    <string name="mine_main_92">Access Camera</string>
+    <string name="mine_main_93">Service Permissions</string>
+    <string name="mine_main_94">Retrieving Device Logs</string>
+    <string name="mine_main_95">Please rate\nBluetaniX App</string>
+    <string name="mine_main_96">Update</string>
+    <string name="mine_main_97">Update to the latest version</string>
+    <string name="mine_main_98">Serial Number</string>
+    <string name="mine_main_99">Device Model</string>
+    <string name="mine_main_100">Wi-Fi Name</string>
+    <string name="mine_main_101">Bluetooth Name</string>
+    <string name="mine_main_102">Main Version</string>
+    <string name="mine_main_103">MCU Version</string>
+    <string name="mine_main_104">Copy All</string>
+    <string name="mine_main_105">Network Configuration</string>
+    <string name="mine_main_106">Currently connected Wi-Fi:</string>
+    <string name="mine_main_107">Enter the new home Wi-Fi information, then tap "Confirm" to apply the changes</string>
+    <string name="mine_main_108">Clear History</string>
+    <string name="mine_main_109">Task Unfinished</string>
+    <string name="mine_main_110">Task history</string>
+    <string name="mine_main_111">finished</string>
+    <string name="mine_main_112">Floor+Wall+Waterline x3</string>
+
+    <string name="mine_main_113">友情提示</string>
+    <string name="mine_main_114">是否确认设置工厂模式？</string>
+
+    <string name="select_photo_source">选择照片来源</string>
+    <string name="take_photo">拍照</string>
+    <string name="choose_from_gallery">从相册选择</string>
+    <string name="cancel">取消</string>
+    <string name="select_images">选择图片</string>
+    <string name="permission_denied">权限被拒绝</string>
+    <string name="need_permission">需要存储权限才能选择图片</string>
+
+    <!-- ========== Character Module Strings (The Curator) ========== -->
+
+    <!-- App & General -->
+    <string name="app_name_curator">The Curator</string>
+    <string name="featured_character">Featured Character</string>
+    <string name="tag_linguist">Linguist</string>
+    <string name="tag_historian">Historian</string>
+    <string name="character_profile">Character Profile</string>
+    <string name="setting_title">Setting</string>
+    <string name="start_conversation">开始对话</string>
+
+    <!-- Character List Screen -->
+    <string name="featured_collection">Featured Collection</string>
+    <string name="curated_personalities">Curated Personalities</string>
+    <string name="scroll_hint">左右滑动查看更多</string>
+    <string name="art_of_story">The Art of Story</string>
+    <string name="narrative_description">Each character is a world of its own, waiting for your input to begin the journey. Browse through our selected avatars and find the companion that resonates with your narrative.</string>
+
+    <!-- Character Edit Screen -->
+    <string name="workspace_title">Workspace</string>
+    <string name="edit_character">编辑角色</string>
+    <string name="character_name_label">角色名称</string>
+    <string name="character_setting_label">角色设定</string>
+    <string name="environment_label">环境描述</string>
+    <string name="save_changes">保存修改</string>
+    <string name="name_hint">输入角色姓名</string>
+    <string name="description_hint">描述角色的性格、背景与说话方式…</string>
+    <string name="environment_hint">定义故事发生的舞台…</string>
+
+    <!-- Character Detail Screen -->
+    <string name="character_portrait">Character Portrait</string>
+    <string name="character_avatar">Character Avatar</string>
+    <string name="character_name_elias">Elias Thorne</string>
+    <string name="character_description_text">"Knowledge is the only currency that doesn\'t depreciate." Elias has spent forty years documenting the lost dialects of the northern peaks. He speaks with a rhythmic precision that feels like reading a classic novel.</string>
+    <string name="environment_description_text">A dimly lit study in the Archive of Silence. The air smells of old parchment and cedarwood. Dust motes dance in the single beam of sunlight cutting through the heavy velvet curtains.</string>
+    <string name="character_description_sample">Elias是一位深居简出的古董书籍修复师。他说话谨慎，总是带着一种淡淡的、近乎忧郁的从容。他对18世纪的装帧工艺有着近乎执着的迷恋。</string>
+    <string name="environment_sample">一间位于雾气弥漫的小巷尽头的书店。室内充满了皮革、陈旧纸张和蜂蜡的气味。窗外是永恒的黄昏。</string>
+
+    <!-- Character Card Names -->
+    <string name="character_name_evelyn">Evelyn</string>
+    <string name="character_name_marcus">Marcus</string>
+    <string name="character_name_sophia">Sophia</string>
+    <string name="character_name_julian">Julian</string>
+
+    <!-- Navigation & Actions -->
+    <string name="menu_desc">Menu</string>
+    <string name="profile_desc">User Profile</string>
+    <string name="nav_browse_desc">Browse Characters</string>
+    <string name="nav_stories_desc">Stories</string>
+    <string name="nav_edit_desc">Edit</string>
+    <string name="btn_edit_avatar_desc">Edit Avatar</string>
+    <string name="save_success">保存成功</string>
+    <string name="save_failed">保存失败</string>
+    <string name="load_failed">加载失败</string>
+
+    <!-- Placeholder Texts -->
+    <string name="placeholder_name">输入角色姓名</string>
+    <string name="placeholder_description">描述角色的性格、背景与说话方式…</string>
+    <string name="placeholder_environment">定义故事发生的舞台…</string>
+
+    <!-- Dialog Messages -->
+    <string name="dialog_unsaved_title">未保存的更改</string>
+    <string name="dialog_unsaved_message">您有未保存的更改，确定要离开吗？</string>
+    <string name="dialog_discard">放弃</string>
+    <string name="dialog_continue_edit">继续编辑</string>
+
+    <!-- Toast Messages -->
+    <string name="toast_name_required">请输入角色名称</string>
+    <string name="toast_save_success">角色信息已保存</string>
+    <string name="toast_save_error">保存失败，请重试</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_character_avatar">角色头像</string>
+    <string name="accessibility_user_profile">用户资料</string>
+    <string name="accessibility_navigation_browse">浏览角色</string>
+    <string name="accessibility_navigation_stories">故事列表</string>
+    <string name="accessibility_navigation_edit">编辑角色</string>
+    <string name="accessibility_start_conversation">开始与角色对话</string>
+    <string name="accessibility_save_button">保存修改</string>
+    <string name="accessibility_edit_avatar">编辑头像</string>
+
+    <!-- Character Tags -->
+    <string name="tag_artist">Artist</string>
+    <string name="tag_poet">Poet</string>
+    <string name="tag_philosopher">Philosopher</string>
+    <string name="tag_explorer">Explorer</string>
+    <string name="tag_scholar">Scholar</string>
+    <string name="tag_writer">Writer</string>
+
+    <string name="back_desc">返回</string>
 </resources>

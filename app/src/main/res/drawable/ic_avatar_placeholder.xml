@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="128dp"
+    android:height="128dp"
+    android:viewportWidth="128"
+    android:viewportHeight="128">
+
+    <!-- 背景圆形 -->
+    <path
+        android:fillColor="@color/character_surface_container_high"
+        android:pathData="M64,64m-60,0a60,60 0,1 1,120 0a60,60 0,1 1,-120 0" />
+
+    <!-- 脸部轮廓 -->
+    <path
+        android:fillColor="@color/character_outline_variant"
+        android:fillAlpha="0.3"
+        android:pathData="M64,48c-6.63,0 -12,5.37 -12,12s5.37,12 12,12 12,-5.37 12,-12 -5.37,-12 -12,-12z" />
+
+    <!-- 身体/肩膀 -->
+    <path
+        android:fillColor="@color/character_outline_variant"
+        android:fillAlpha="0.3"
+        android:pathData="M64,68c-15.73,0 -28.5,9.65 -28.5,21.5h57c0,-11.85 -12.77,-21.5 -28.5,-21.5z" />
+
+    <!-- 书本图标表示学者身份 -->
+    <path
+        android:fillColor="@color/character_secondary"
+        android:fillAlpha="0.5"
+        android:pathData="M72,74 L80,74 L80,90 L72,90 Z" />
+    <path
+        android:fillColor="@color/character_secondary"
+        android:fillAlpha="0.5"
+        android:pathData="M48,74 L56,74 L56,90 L48,90 Z" />
+    <path
+        android:fillColor="@color/character_secondary"
+        android:fillAlpha="0.5"
+        android:pathData="M60,78 L68,78 L68,94 L60,94 Z" />
+
+    <!-- 眼镜框 -->
+    <path
+        android:strokeColor="@color/character_secondary"
+        android:strokeWidth="2"
+        android:strokeAlpha="0.6"
+        android:pathData="M52,58 L58,58" />
+    <path
+        android:strokeColor="@color/character_secondary"
+        android:strokeWidth="2"
+        android:strokeAlpha="0.6"
+        android:pathData="M70,58 L76,58" />
+    <path
+        android:strokeColor="@color/character_secondary"
+        android:strokeWidth="2"
+        android:strokeAlpha="0.6"
+        android:pathData="M58,58 C58,62 62,64 64,64 C66,64 70,62 70,58" />
+
+</vector>

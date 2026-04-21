@@ -1,40 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- 网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
-    <!-- Application标签所有属性写在起始标签内，一行或分行都可，但必须在<>内 -->
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Iot"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:usesCleartextTraffic="true">
-
-        <!-- HomeActivity -->
         <activity
-            android:name=".HomeActivity"
+            android:name=".CharacterEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CharacterListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CharacterDetailActivity"
             android:exported="false" />
 
-        <!-- MainActivity -->
+
+
+        <activity
+            android:name=".SessionsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PasswordVerificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PasswordNewSetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ForgetPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterCodeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" /> <!-- HomeActivity -->
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" /> <!-- MainActivity -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

@@ -1,5 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="text_black">#131F27</color>
+    <color name="text_black_99">#99131F27</color>
+    <color name="home_back">#F7F7F6</color>
+    <color name="error_input_back" tools:ignore="MissingDefaultResource">#1AFF4433</color>
+    <color name="gray_button_back" tools:ignore="MissingDefaultResource">#66131F27</color>
+    <color name="yellow_button_resend">#EB813B</color>
+    <color name="error_show_text">#FF4433</color>
+    <color name="blue_button">#CFE9EF</color>
+    <color name="orange">#EB813B</color>
+    <color name="gray">#CCCCCC</color>
+    <color name="green">#34C759</color>
+    <color name="primary_color">#EB813B</color>
+    <color name="gray_light">#E0E0E0</color>
+    <color name="map_line_show">#D9D9D9</color>
+
+    <!-- Nexus AI 聊天界面新增颜色 -->
+    <color name="text_gray">#94A3B8</color>
+    <color name="blue_text">#2563EB</color>
+    <color name="line_gray">#E2E8F0</color>
+    <color name="chat_ai_bubble_bg">#FFFFFF</color>
+    <color name="chat_user_bubble_bg">#2563EB</color>
+    <color name="code_block_bg">#1E293B</color>
+    <color name="code_text_color">#93C5FD</color>
+    <color name="green_dot">#22C55E</color>
+    <color name="settings_group_bg">#F8FAFC</color>
+    <color name="badge_green_bg">#DCFCE7</color>
+    <color name="badge_green_text">#059669</color>
+    <color name="pinned_session_bg">#EFF6FF</color>
+    <color name="pinned_session_border">#BFDBFE</color>
+    <color name="search_bg">#F1F5F9</color>
+    <color name="session_icon_bg">#F1F5F9</color>
+    <color name="input_bg">#F8FAFC</color>
+    <color name="input_border">#E2E8F0</color>
+    <color name="date_bg">#E6E2E8F0</color>
+    <color name="transparent_white">#E6FFFFFF</color>
+    <color name="gradient_blue_start">#2563EB</color>
+    <color name="gradient_blue_end">#1D4ED8</color>
+    <color name="avatar_bg">#33FFFFFF</color>
+    <color name="fab_pressed">#1D4ED8</color>
+    <color name="fab_normal">#2563EB</color>
+    <color name="delete_red">#EF4444</color>
+    <color name="fire_orange">#F97316</color>
+    <color name="dark_mode_purple">#6366F1</color>
+    <color name="markdown_green">#10B981</color>
+    <color name="text_size_purple">#A855F7</color>
+    <color name="shield_gray">#475569</color>
+    <color name="white_20">#1AFFFFFF</color>
+    <color name="blue_100">#BFDBFE</color>
+    <color name="blue_50">#EFF6FF</color>
+    <color name="slate_50">#F8FAFC</color>
+    <color name="slate_100">#F1F5F9</color>
+    <color name="slate_200">#E2E8F0</color>
+    <color name="slate_300">#CBD5E1</color>
+    <color name="slate_400">#94A3B8</color>
+    <color name="slate_500">#64748B</color>
+    <color name="slate_600">#475569</color>
+    <color name="slate_700">#334155</color>
+    <color name="slate_800">#1E293B</color>
+    <color name="slate_900">#0F172A</color>
+
+    <!-- ========== Character Module Colors (The Curator) ========== -->
+
+    <!-- Character Module 主色调 -->
+    <color name="character_background">#FAF9F5</color>
+    <color name="character_on_surface">#1B1C1A</color>
+    <color name="character_on_surface_variant">#4C463E</color>
+    <color name="character_secondary">#695C4C</color>
+    <color name="character_outline_variant">#CFC5BA</color>
+    <color name="character_surface_container">#EFEEEA</color>
+    <color name="character_surface_container_low">#F5F4F0</color>
+    <color name="character_surface_container_high">#E9E8E4</color>
+    <color name="character_surface_container_highest">#E3E2DF</color>
+    <color name="character_on_primary_fixed">#1C1B1B</color>
+    <color name="character_secondary_fixed">#F2E0CB</color>
+    <color name="character_surface">#FAF9F5</color>
+    <color name="character_primary">#5D5C5B</color>
+    <color name="character_tertiary">#585C66</color>
+    <color name="character_error">#BA1A1A</color>
+    <color name="character_error_container">#FFDAD6</color>
+    <color name="character_inverse_surface">#30312E</color>
+    <color name="character_inverse_on_surface">#F2F1ED</color>
+    <color name="character_inverse_primary">#C8C6C5</color>
+    <color name="character_outline">#7E766D</color>
+    <color name="character_surface_dim">#DBDAD6</color>
+    <color name="character_surface_bright">#FAF9F5</color>
+    <color name="character_surface_tint">#5F5E5E</color>
+
+    <!-- TopAppBar & Navigation 颜色 -->
+    <color name="top_bar_background">#FAF9F5CC</color>
+    <color name="bottom_nav_background">#FAF9F5E6</color>
+    <color name="nav_active_background">#1B1C1A</color>
+    <color name="nav_inactive_icon">#8B7D6B</color>
+
+    <!-- Character Module 透明度变体 -->
+    <color name="character_white_80">#CCFFFFFF</color>
+    <color name="character_black_80">#CC1B1C1A</color>
+    <color name="character_secondary_20">#33695C4C</color>
+
+    <!-- Button & Input 颜色 -->
+    <color name="character_button_primary">#1C1B1B</color>
+    <color name="character_button_text">#FFFFFF</color>
+    <color name="character_input_background">#FFFFFF</color>
+    <color name="character_input_border">#CFC5BA</color>
+    <color name="character_input_hint">#664C463E</color>
+    <color name="character_placeholder">#404C463E</color>
+
+    <!-- Card & Container 颜色 -->
+    <color name="character_card_background">#FFFFFF</color>
+    <color name="character_narrative_background">#FAF9F5</color>
+    <color name="character_tag_background">#E9E8E4</color>
+
+    <!-- Decorative 颜色 -->
+    <color name="character_decorative_blur">#F2E0CB</color>
+    <color name="character_border_light">#1ACFC5BA</color>
+
+    <!-- Badge & Status 颜色 -->
+    <color name="character_badge_bg">#F2E0CB</color>
+    <color name="character_badge_text">#695C4C</color>
 </resources>

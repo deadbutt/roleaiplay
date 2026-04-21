@@ -1,20 +1,16 @@
 package com.example.iot
 
-import android.Manifest
-import android.content.pm.PackageManager
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import org.json.JSONObject
@@ -22,7 +18,6 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 class HomeActivity : AppCompatActivity() {
@@ -33,17 +28,13 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var tvDeviceStatus: TextView
     private lateinit var btnSendCmd: MaterialButton
     private lateinit var btnRefresh: Button
-
-    // 新增：语音交互控件
     private lateinit var etUserInput: TextInputEditText
     private lateinit var btnSendText: Button
-    private lateinit var btnVoiceInput: Button
-    private lateinit var tvAiReply: TextView
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var chatAdapter: ChatAdapter
+    private lateinit var chatHistoryContainer: LinearLayout
+    private lateinit var chatHistoryScroll: ScrollView
 
     // 后端接口地址
-    private val BASE_URL = "http://47.118.22.220:8081/api/"
+    private val BASE_URL = "http://47.118.22.220:8091/api/"
     private val JSON = "application/json; charset=utf-8".toMediaType()
 
     private val handler = Handler(Looper.getMainLooper())
@@ -55,12 +46,21 @@ class HomeActivity : AppCompatActivity() {
     // 设备ID（固定）
     private val DEVICE_ID = "test01"
 
-    // 聊天历史
-    private val chatHistory = mutableListOf<ChatMessage>()
+    // 用户名（用于后端 user_id）
+    private var username: String = ""
+
+    // 登录状态管理
+    private val PREFS_NAME = "login_prefs"
+    private val KEY_USERNAME = "username"
+    private val KEY_LOGIN_TIME = "login_time"
+    private val SESSION_TIMEOUT = 7 * 24 * 60 * 60 * 1000L // 7天超时
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        // 检查登录状态
+        checkLoginStatus()
 
         // 绑定控件
         tvWelcome = findViewById(R.id.tv_welcome)
@@ -68,20 +68,18 @@ class HomeActivity : AppCompatActivity() {
         tvDeviceStatus = findViewById(R.id.tv_device_status)
         btnSendCmd = findViewById(R.id.btn_send_cmd)
         btnRefresh = findViewById(R.id.btn_refresh)
-
-        // 新增控件绑定
         etUserInput = findViewById(R.id.et_user_input)
         btnSendText = findViewById(R.id.btn_send_text)
-        btnVoiceInput = findViewById(R.id.btn_voice_input)
-        tvAiReply = findViewById(R.id.tv_ai_reply)
-        recyclerView = findViewById(R.id.recycler_chat)
+        chatHistoryContainer = findViewById(R.id.chat_history_container)
+        chatHistoryScroll = findViewById(R.id.chat_history_scroll)
 
         // 获取登录用户名并显示
-        val username = intent.getStringExtra("username") ?: "未知用户"
+        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        username = prefs.getString(KEY_USERNAME, "") ?: ""
+        if (username.isEmpty()) {
+            username = "未知用户"
+        }
         tvWelcome.text = "欢迎，$username！"
-
-        // 设置聊天列表
-        setupChatList()
 
         // 立即获取一次设备数据
         fetchDeviceData()
@@ -95,17 +93,8 @@ class HomeActivity : AppCompatActivity() {
         // 下发指令按钮
         btnSendCmd.setOnClickListener { sendDeviceCommand() }
 
-        // 新增：发送文本按钮
+        // 发送文本按钮
         btnSendText.setOnClickListener { sendUserText() }
-
-        // 新增：语音输入按钮
-        btnVoiceInput.setOnClickListener { startVoiceInput() }
-    }
-
-    private fun setupChatList() {
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        chatAdapter = ChatAdapter(chatHistory)
-        recyclerView.adapter = chatAdapter
     }
 
     private fun startPolling() {
@@ -189,10 +178,10 @@ class HomeActivity : AppCompatActivity() {
         etUserInput.text?.clear()
 
         // 添加用户消息到聊天历史
-        addChatMessage(ChatMessage(text, true))
+        addChatMessage("👤 $text", isUser = true)
 
-        // 显示正在输入
-        tvAiReply.text = "AI正在思考..."
+        // 显示一个临时的“AI正在输入...”消息（可选）
+        val loadingIndex = addTemporaryAiMessage("🤖 AI正在输入...")
 
         Thread {
             try {
@@ -203,6 +192,7 @@ class HomeActivity : AppCompatActivity() {
 
                 val json = JSONObject().apply {
                     put("text", text)
+                    put("user_id", username)
                     put("device_id", DEVICE_ID)
                 }
                 val body = json.toString().toRequestBody(JSON)
@@ -224,51 +214,81 @@ class HomeActivity : AppCompatActivity() {
                         val detailedEmotion = emotion.getString("detailed_emotion")
 
                         handler.post {
-                            tvAiReply.text = "🤖 $reply"
-
-                            // 添加AI回复到聊天历史
-                            addChatMessage(ChatMessage("[$detailedEmotion] $reply", false))
-
-                            Toast.makeText(this@HomeActivity,
-                                "情感: $detailedEmotion", Toast.LENGTH_SHORT).show()
+                            // 移除临时“AI正在输入...”消息
+                            if (loadingIndex != -1) {
+                                chatHistoryContainer.removeViewAt(loadingIndex)
+                            }
+                            // 添加AI回复
+                            addChatMessage("🤖 [$detailedEmotion] $reply", isUser = false)
                         }
                     } else {
                         handler.post {
-                            tvAiReply.text = "❌ 分析失败"
+                            if (loadingIndex != -1) {
+                                chatHistoryContainer.removeViewAt(loadingIndex)
+                            }
+                            addChatMessage("❌ 分析失败，请重试", isUser = false)
                         }
+                    }
+                } else {
+                    handler.post {
+                        if (loadingIndex != -1) {
+                            chatHistoryContainer.removeViewAt(loadingIndex)
+                        }
+                        addChatMessage("❌ 网络错误", isUser = false)
                     }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
                 handler.post {
-                    tvAiReply.text = "❌ 网络错误"
+                    if (loadingIndex != -1) {
+                        chatHistoryContainer.removeViewAt(loadingIndex)
+                    }
+                    addChatMessage("❌ 网络错误", isUser = false)
                 }
             }
         }.start()
     }
 
-    // 语音输入（需要权限）
-    private fun startVoiceInput() {
-        // 检查录音权限
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-            != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.RECORD_AUDIO), 101)
-            return
-        }
-
-        // TODO: 调用语音识别（可以用百度/科大讯飞SDK）
-        // 这里先用Toast提示
-        Toast.makeText(this, "语音识别功能开发中...", Toast.LENGTH_SHORT).show()
-
-        // 临时：模拟语音识别结果
-        etUserInput.setText("我今天心情不错")
+    // 添加临时AI消息（如“AI正在输入...”），返回该消息在LinearLayout中的索引
+    private fun addTemporaryAiMessage(message: String): Int {
+        val textView = createMessageTextView(message, isUser = false)
+        chatHistoryContainer.addView(textView)
+        scrollToBottom()
+        return chatHistoryContainer.indexOfChild(textView)
     }
 
-    private fun addChatMessage(message: ChatMessage) {
-        chatHistory.add(message)
-        chatAdapter.notifyItemInserted(chatHistory.size - 1)
-        recyclerView.smoothScrollToPosition(chatHistory.size - 1)
+    // 创建消息TextView
+    private fun createMessageTextView(message: String, isUser: Boolean): TextView {
+        return TextView(this).apply {
+            text = message
+            textSize = 14f
+            setPadding(24, 16, 24, 16)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(0, 8, 0, 0)
+            }
+            // 设置背景色
+            setBackgroundColor(
+                if (isUser) android.graphics.Color.parseColor("#E0E0E0")
+                else android.graphics.Color.parseColor("#FFFFFF")
+            )
+        }
+    }
+
+    // 添加消息到聊天历史
+    private fun addChatMessage(message: String, isUser: Boolean) {
+        val textView = createMessageTextView(message, isUser)
+        chatHistoryContainer.addView(textView)
+        scrollToBottom()
+    }
+
+    // 滚动到底部
+    private fun scrollToBottom() {
+        chatHistoryScroll.post {
+            chatHistoryScroll.fullScroll(ScrollView.FOCUS_DOWN)
+        }
     }
 
     // 下发设备指令
@@ -308,61 +328,42 @@ class HomeActivity : AppCompatActivity() {
         }.start()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 101 && grantResults.isNotEmpty()
-            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            startVoiceInput()
-        }
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         isDestroyed = true
         handler.removeCallbacksAndMessages(null)
     }
-}
 
-// 聊天消息数据类
-data class ChatMessage(val text: String, val isUser: Boolean)
+    // 检查登录状态
+    private fun checkLoginStatus() {
+        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val savedUsername = prefs.getString(KEY_USERNAME, "")
+        val loginTime = prefs.getLong(KEY_LOGIN_TIME, 0)
+        val currentTime = System.currentTimeMillis()
 
-// 聊天适配器（完整实现）
-class ChatAdapter(private val messages: List<ChatMessage>) :
-    RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
-
-    // ViewHolder 类
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvMessage: TextView = itemView.findViewById(android.R.id.text1)
+        // 如果没有登录信息或超时，返回登录页
+        if (savedUsername.isNullOrEmpty() || (currentTime - loginTime > SESSION_TIMEOUT)) {
+            clearLoginInfo()
+            val intent = Intent(this@HomeActivity, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
     }
 
-    // 创建 ViewHolder
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(android.R.layout.simple_list_item_1, parent, false)
-        return ViewHolder(view)
+    // 保存登录信息
+    private fun saveLoginInfo(username: String) {
+        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        prefs.edit().apply {
+            putString(KEY_USERNAME, username)
+            putLong(KEY_LOGIN_TIME, System.currentTimeMillis())
+            apply()
+        }
     }
 
-    // 绑定数据
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val msg = messages[position]
-        holder.tvMessage.text = if (msg.isUser) "👤 ${msg.text}" else "🤖 ${msg.text}"
-
-        // 设置背景颜色
-        holder.tvMessage.setBackgroundColor(
-            if (msg.isUser)
-                android.graphics.Color.parseColor("#E0E0E0")  // 用户消息灰色
-            else
-                android.graphics.Color.parseColor("#FFFFFF")  // AI消息白色
-        )
-
-        // 设置内边距
-        holder.tvMessage.setPadding(32, 16, 32, 16)
+    // 清除登录信息
+    private fun clearLoginInfo() {
+        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        prefs.edit().clear().apply()
     }
-
-    // 返回列表项数量
-    override fun getItemCount(): Int = messages.size
 }

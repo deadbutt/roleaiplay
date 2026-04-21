@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="@color/character_background"
+    android:paddingStart="32dp"
+    android:paddingEnd="32dp"
+    android:elevation="4dp">
+
+    <ImageButton
+        android:id="@+id/btn_menu"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_menu"
+        android:contentDescription="@string/menu_desc" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="    角色卡"
+        android:textColor="@color/character_on_surface"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:gravity="center" />
+
+    <!-- 编辑按钮 -->
+    <ImageButton
+        android:id="@+id/btn_edit"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_edit_note"
+        android:contentDescription="@string/edit_character" />
+
+    <FrameLayout
+        android:id="@+id/profile_container"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/bg_profile_avatar"
+        android:layout_marginStart="16dp">
+
+        <ImageView
+            android:id="@+id/iv_user_profile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_profile_placeholder"
+            android:contentDescription="@string/profile_desc" />
+
+    </FrameLayout>
+
+</LinearLayout>
