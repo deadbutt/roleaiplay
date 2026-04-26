@@ -226,9 +226,9 @@ class RegisterPasswordActivity : AppCompatActivity() {
                         if (msg.contains("成功")) {
                             // 保存登录信息
                             saveLoginInfo(username)
-                            // 登录成功，跳转到主界面
-                            val intent = Intent(this@RegisterPasswordActivity, HomeActivity::class.java)
-                            intent.putExtra("username", username)
+                            // 登录成功，跳转到聊天界面
+                            val intent = Intent(this@RegisterPasswordActivity, ChatActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)
                             finishAffinity() // 清除所有注册相关的Activity
                         } else {

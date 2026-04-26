@@ -1,6 +1,7 @@
 package com.example.iot
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -45,12 +46,10 @@ class CharacterListActivity : AppCompatActivity() {
     // 设置新建角色卡片（第一个卡片）
     private fun setupNewCharacterCard() {
         val cardNew = findViewById<LinearLayout>(R.id.card_evelyn)
-        val tvName = cardNew?.findViewById<TextView>(R.id.tv_character_name)
-        val tvDescription = cardNew?.findViewById<TextView>(R.id.tv_character_description)
-        val ivAvatar = cardNew?.findViewById<ImageView>(R.id.iv_character_avatar)
+        val tvName = cardNew?.findViewById<TextView>(R.id.tv_card_name)
+        val ivAvatar = cardNew?.findViewById<ImageView>(R.id.iv_card_avatar)
 
         tvName?.text = "新建角色"
-        tvDescription?.text = "点击创建新角色"
         ivAvatar?.setImageResource(R.drawable.icon_add)
 
         cardNew?.setOnClickListener {
@@ -76,11 +75,13 @@ class CharacterListActivity : AppCompatActivity() {
                             val character = characterList[index]
                             card?.visibility = View.VISIBLE
 
-                            val tvName = card?.findViewById<TextView>(R.id.tv_character_name)
-                            val tvDescription = card?.findViewById<TextView>(R.id.tv_character_description)
+                            val tvName = card?.findViewById<TextView>(R.id.tv_card_name)
+                            val ivAvatar = card?.findViewById<ImageView>(R.id.iv_card_avatar)
 
                             tvName?.text = character.name
-                            tvDescription?.text = character.description
+
+                            // 加载头像
+                            loadAvatar(character.avatarUrl, ivAvatar)
 
                             card?.setOnClickListener {
                                 openDetailCharacter(character)
@@ -95,6 +96,24 @@ class CharacterListActivity : AppCompatActivity() {
                     findViewById<LinearLayout>(R.id.card_marcus)?.visibility = View.GONE
                     findViewById<LinearLayout>(R.id.card_sophia)?.visibility = View.GONE
                     findViewById<LinearLayout>(R.id.card_julian)?.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+    // 加载头像
+    private fun loadAvatar(avatarUrl: String?, imageView: ImageView?) {
+        if (avatarUrl.isNullOrEmpty()) {
+            imageView?.setImageResource(R.drawable.ic_avatar_placeholder)
+            return
+        }
+
+        apiClient.loadImage(avatarUrl) { bitmap ->
+            runOnUiThread {
+                if (bitmap != null) {
+                    imageView?.setImageBitmap(bitmap)
+                } else {
+                    imageView?.setImageResource(R.drawable.ic_avatar_placeholder)
                 }
             }
         }

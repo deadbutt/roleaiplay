@@ -17,6 +17,11 @@ class CharacterDetailActivity : AppCompatActivity() {
     private lateinit var tvEnvironment: TextView
     private lateinit var btnStartConversation: Button
 
+    // 存储角色数据，用于传递给编辑页面
+    private var currentCharacterName: String = ""
+    private var currentCharacterDescription: String = ""
+    private var currentCharacterEnvironment: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character_detail)
@@ -43,6 +48,11 @@ class CharacterDetailActivity : AppCompatActivity() {
             // 加载角色详情
             loadCharacterDetail()
 
+            // 编辑按钮点击事件（在top_app_bar中）
+            findViewById<ImageButton>(R.id.btn_edit)?.setOnClickListener {
+                openEditCharacter()
+            }
+
             // 开始对话按钮
             btnStartConversation.setOnClickListener {
                 startConversation()
@@ -60,14 +70,16 @@ class CharacterDetailActivity : AppCompatActivity() {
         apiClient.getCharacterDetail(characterId) { success, msg, character ->
             runOnUiThread {
                 if (success && character != null) {
+                    currentCharacterName = character.name
+                    currentCharacterDescription = character.description
+                    currentCharacterEnvironment = character.scenario
+
                     tvName.text = character.name
                     tvDescription.text = character.description
                     tvEnvironment.text = character.scenario
                     
-                    // 如果有头像，设置图片（暂时使用默认头像）
-                    if (character.avatarUrl.isNotEmpty()) {
-                        // 这里可以使用Glide等库加载网络图片
-                    }
+                    // 加载头像
+                    loadAvatar(character.avatarUrl)
                 } else {
                     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
                 }
@@ -75,14 +87,45 @@ class CharacterDetailActivity : AppCompatActivity() {
         }
     }
 
+    // 加载头像
+    private fun loadAvatar(avatarUrl: String?) {
+        if (avatarUrl.isNullOrEmpty()) {
+            ivAvatar.setImageResource(R.drawable.ic_avatar_placeholder)
+            return
+        }
+
+        apiClient.loadImage(avatarUrl) { bitmap ->
+            runOnUiThread {
+                if (bitmap != null) {
+                    ivAvatar.setImageBitmap(bitmap)
+                } else {
+                    ivAvatar.setImageResource(R.drawable.ic_avatar_placeholder)
+                }
+            }
+        }
+    }
+
+    // 打开编辑界面
+    private fun openEditCharacter() {
+        val intent = Intent(this@CharacterDetailActivity, CharacterEditActivity::class.java)
+        intent.putExtra("characterId", characterId)
+        startActivity(intent)
+    }
+
     // 开始对话
     private fun startConversation() {
         // 跳转到ChatActivity，传递角色ID和名称
         val intent = Intent(this@CharacterDetailActivity, ChatActivity::class.java)
         intent.putExtra("characterId", characterId)
-        intent.putExtra("characterName", tvName.text.toString())
-        intent.putExtra("prompt", tvDescription.text.toString())
+        intent.putExtra("characterName", currentCharacterName)
+        intent.putExtra("prompt", currentCharacterDescription)
         startActivity(intent)
         finish()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // 从编辑页面返回时，刷新角色详情
+        loadCharacterDetail()
     }
 }

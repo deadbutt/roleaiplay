@@ -9,7 +9,7 @@
     tools:context=".CharacterListActivity">
 
     <!-- TopAppBar -->
-    <include layout="@layout/top_app_bar" />
+    <include layout="@layout/top_app" />
 
     <ScrollView
         android:layout_width="match_parent"

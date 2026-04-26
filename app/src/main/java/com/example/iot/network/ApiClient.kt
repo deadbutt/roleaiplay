@@ -1,8 +1,11 @@
 package com.example.iot.network
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import com.example.iot.model.*
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -723,6 +726,67 @@ class ApiClient(private val context: Context) {
     }
 
     // ==================== 辅助方法 ====================
+
+    // 上传头像
+    fun uploadAvatar(filePart: MultipartBody.Part, callback: (Boolean, String, String?) -> Unit) {
+        Thread {
+            try {
+                val requestBody = MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addPart(filePart)
+                    .build()
+
+                val request = buildRequest("${BASE_URL}upload/avatar", "POST", requestBody.toString())
+                    .newBuilder()
+                    .post(requestBody)
+                    .build()
+
+                val response = client.newCall(request).execute()
+                if (response.isSuccessful && response.body != null) {
+                    val result = response.body!!.string()
+                    val json = JSONObject(result)
+                    if (json.getInt("code") == 200) {
+                        val url = json.getJSONObject("data").getString("url")
+                        callback(true, json.getString("msg"), url)
+                    } else {
+                        callback(false, json.getString("msg"), null)
+                    }
+                } else {
+                    callback(false, "网络错误", null)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                callback(false, "请求失败: ${e.message}", null)
+            }
+        }.start()
+    }
+
+    // 加载网络图片
+    fun loadImage(imageUrl: String, callback: (Bitmap?) -> Unit) {
+        Thread {
+            try {
+                val fullUrl = if (imageUrl.startsWith("http")) {
+                    imageUrl
+                } else {
+                    "${BASE_URL.substring(0, BASE_URL.lastIndexOf("/api/"))}$imageUrl"
+                }
+
+                val request = Request.Builder().url(fullUrl).build()
+                val response = client.newCall(request).execute()
+
+                if (response.isSuccessful && response.body != null) {
+                    val bytes = response.body!!.bytes()
+                    val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                    callback(bitmap)
+                } else {
+                    callback(null)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                callback(null)
+            }
+        }.start()
+    }
 
     private fun parseSessionArray(array: org.json.JSONArray?): List<Session> {
         val sessions = mutableListOf<Session>()

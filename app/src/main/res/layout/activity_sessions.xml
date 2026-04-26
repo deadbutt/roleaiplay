@@ -8,492 +8,93 @@
     android:background="@color/home_back"
     tools:context=".SessionsActivity">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_back_to_chat"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="← 返回对话"
+            android:textColor="@color/blue_text"
+            android:textSize="14sp"
+            android:gravity="start"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="历史会话"
+            android:textColor="@color/text_black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <ImageView
+            android:id="@+id/iv_delete_all"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="44dp"
+            android:padding="10dp"
+            android:src="@drawable/icon_delete_all"
+            app:tint="#EF4444"
+            android:gravity="end"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="30dp">
+            android:background="@drawable/xml_search_bg"
+            android:paddingStart="12dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-            <!-- 顶部操作栏 -->
-            <LinearLayout
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/icon_search"
+                app:tint="@color/text_gray"/>
+
+            <EditText
+                android:id="@+id/cet_search_session"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="12dp"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:id="@+id/tv_back_to_chat"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="← 返回对话"
-                    android:textColor="@color/blue_text"
-                    android:textSize="14sp"
-                    android:gravity="start"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="历史会话"
-                    android:textColor="@color/text_black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:gravity="center"/>
-
-                <ImageView
-                    android:id="@+id/iv_delete_all"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="44dp"
-                    android:padding="10dp"
-                    android:src="@drawable/icon_delete_all"
-                    app:tint="#EF4444"
-                    android:gravity="end"/>
-            </LinearLayout>
-
-            <!-- 搜索框 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/xml_search_bg"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="16dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:src="@drawable/icon_search"
-                        app:tint="@color/text_gray"/>
-
-                    <EditText
-                        android:id="@+id/cet_search_session"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:hint="搜索对话标题或内容..."
-                        android:textColor="@color/text_black"
-                        android:textColorHint="#66131F27"
-                        android:textSize="14sp"
-                        android:layout_marginStart="8dp"
-                        android:inputType="text"/>
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- 置顶区域 -->
-            <TextView
-                android:id="@+id/tv_pinned_sessions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="置顶工作流"
-                android:textColor="@color/text_gray"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="12dp"
-                android:visibility="gone"/>
-
-            <LinearLayout
-                android:id="@+id/ll_pinned_sessions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="24dp"
-                android:visibility="gone">
-
-                <!-- 置顶项 1 -->
-                <LinearLayout
-                    android:id="@+id/ll_pinned_session_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/xml_pinned_session_bg"
-                    android:padding="16dp"
-                    android:layout_marginBottom="12dp"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginBottom="4dp">
-
-                        <TextView
-                            android:id="@+id/tv_pinned_title_1"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/text_black"
-                            android:textSize="14sp"
-                            android:textStyle="bold"/>
-
-                        <TextView
-                            android:id="@+id/tv_pinned_time_1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/blue_text"
-                            android:textSize="10sp"/>
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tv_pinned_preview_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textColor="@color/text_gray"
-                        android:textSize="12sp"
-                        android:fontStyle="italic"
-                        android:maxLines="1"
-                        android:ellipsize="end"/>
-                </LinearLayout>
-
-                <!-- 置顶项 2 -->
-                <LinearLayout
-                    android:id="@+id/ll_pinned_session_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/xml_pinned_session_bg"
-                    android:padding="16dp"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginBottom="4dp">
-
-                        <TextView
-                            android:id="@+id/tv_pinned_title_2"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/text_black"
-                            android:textSize="14sp"
-                            android:textStyle="bold"/>
-
-                        <TextView
-                            android:id="@+id/tv_pinned_time_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/text_gray"
-                            android:textSize="10sp"/>
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tv_pinned_preview_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textColor="@color/text_gray"
-                        android:textSize="12sp"
-                        android:fontStyle="italic"
-                        android:maxLines="1"
-                        android:ellipsize="end"/>
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- 今天 -->
-            <TextView
-                android:id="@+id/tv_today_sessions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="今天"
-                android:textColor="@color/text_gray"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="12dp"
-                android:visibility="gone"/>
-
-            <LinearLayout
-                android:id="@+id/ll_today_sessions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:id="@+id/ll_session_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="12dp"
-                    android:gravity="center_vertical"
-                    android:background="@drawable/xml_session_item_bg"
-                    android:layout_marginBottom="4dp"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/xml_session_icon_bg"
-                        android:gravity="center">
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/icon_chat"
-                            app:tint="@color/text_gray"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginStart="16dp">
-
-                        <TextView
-                            android:id="@+id/tv_session_title_1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/text_black"
-                            android:textSize="14sp"
-                            android:maxLines="1"
-                            android:ellipsize="end"/>
-
-                        <TextView
-                            android:id="@+id/tv_session_info_1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/text_gray"
-                            android:textSize="11sp"
-                            android:layout_marginTop="2dp"/>
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/iv_session_menu_1"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:padding="8dp"
-                        android:src="@drawable/icon_menu_dots"
-                        app:tint="@color/text_gray"
-                        android:visibility="gone"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_session_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="12dp"
-                    android:gravity="center_vertical"
-                    android:background="@drawable/xml_session_item_bg"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/xml_session_icon_bg"
-                        android:gravity="center">
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/icon_translation"
-                            app:tint="@color/text_gray"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginStart="16dp">
-
-                        <TextView
-                            android:id="@+id/tv_session_title_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/text_black"
-                            android:textSize="14sp"
-                            android:maxLines="1"
-                            android:ellipsize="end"/>
-
-                        <TextView
-                            android:id="@+id/tv_session_info_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/text_gray"
-                            android:textSize="11sp"
-                            android:layout_marginTop="2dp"/>
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/iv_session_menu_2"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:padding="8dp"
-                        android:src="@drawable/icon_menu_dots"
-                        app:tint="@color/text_gray"
-                        android:visibility="gone"/>
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- 昨天 -->
-            <TextView
-                android:id="@+id/tv_yesterday_sessions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/text_gray"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="12dp"
-                android:visibility="gone"/>
-
-            <LinearLayout
-                android:id="@+id/ll_yesterday_sessions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:alpha="0.7"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:id="@+id/ll_session_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="12dp"
-                    android:gravity="center_vertical"
-                    android:background="@drawable/xml_session_item_bg"
-                    android:layout_marginBottom="4dp"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/xml_session_icon_bg"
-                        android:gravity="center">
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/icon_document"
-                            app:tint="@color/text_gray"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginStart="16dp">
-
-                        <TextView
-                            android:id="@+id/tv_session_title_3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/text_black"
-                            android:textSize="14sp"
-                            android:maxLines="1"
-                            android:ellipsize="end"/>
-
-                        <TextView
-                            android:id="@+id/tv_session_info_3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/text_gray"
-                            android:textSize="11sp"
-                            android:layout_marginTop="2dp"/>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_session_4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="12dp"
-                    android:gravity="center_vertical"
-                    android:background="@drawable/xml_session_item_bg"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/xml_session_icon_bg"
-                        android:gravity="center">
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/icon_code"
-                            app:tint="@color/text_gray"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginStart="16dp">
-
-                        <TextView
-                            android:id="@+id/tv_session_title_4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/text_black"
-                            android:textSize="14sp"
-                            android:maxLines="1"
-                            android:ellipsize="end"/>
-
-                        <TextView
-                            android:id="@+id/tv_session_info_4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/text_gray"
-                            android:textSize="11sp"
-                            android:layout_marginTop="2dp"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
+                android:background="@null"
+                android:hint="搜索对话标题或内容..."
+                android:textColor="@color/text_black"
+                android:textColorHint="#66131F27"
+                android:textSize="14sp"
+                android:layout_marginStart="8dp"
+                android:inputType="text"/>
         </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_sessions"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="30dp"
+        android:scrollbars="none" />
 
 </LinearLayout>

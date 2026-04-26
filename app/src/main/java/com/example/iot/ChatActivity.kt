@@ -1,5 +1,8 @@
 package com.example.iot
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -14,6 +17,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.iot.model.ChatSendResponse
 import com.example.iot.network.ApiClient
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ChatActivity : AppCompatActivity() {
 
@@ -46,6 +51,9 @@ class ChatActivity : AppCompatActivity() {
             // 更新AI名称显示
             findViewById<TextView>(R.id.tv_ai_name)?.text = characterName
 
+            // 设置当天日期
+            updateDateDisplay()
+
             // 检查是否有会话ID
             currentSessionId = intent.getStringExtra("sessionId") ?: ""
 
@@ -55,6 +63,11 @@ class ChatActivity : AppCompatActivity() {
             val ivMenu = findViewById<ImageView>(R.id.iv_chat_menu)
             val ivNewSession = findViewById<ImageView>(R.id.iv_new_session)
             val etInput = findViewById<EditText>(R.id.cet_message_input)
+
+            // 如果有会话ID，加载历史消息
+            if (currentSessionId.isNotEmpty()) {
+                loadSessionDetail(currentSessionId)
+            }
 
             // 发送按钮点击事件
             ivSend?.setOnClickListener {
@@ -128,8 +141,8 @@ class ChatActivity : AppCompatActivity() {
                     etInput?.setText(prompt)
                     ivSend?.performClick()
                 }, 500)
-            } else {
-                // 没有提示词，显示欢迎消息
+            } else if (currentSessionId.isEmpty()) {
+                // 没有提示词且不是历史会话，显示欢迎消息
                 addWelcomeMessage()
             }
 
@@ -142,10 +155,17 @@ class ChatActivity : AppCompatActivity() {
         }
     }
 
+    // 设置当天日期显示
+    private fun updateDateDisplay() {
+        val dateFormat = SimpleDateFormat("yyyy年MM月dd日", Locale.getDefault())
+        val currentDate = dateFormat.format(Date())
+        findViewById<TextView>(R.id.tv_chat_date)?.text = currentDate
+    }
+
     // 创建新会话
     private fun createNewSession(firstMessage: String, callback: (String?) -> Unit) {
-        val title = if (firstMessage.length > 20) firstMessage.substring(0, 20) + "..." else firstMessage
-        apiClient.createSession(title, characterId) { success, msg, session ->
+        // 不传title，让后端默认设置为"新对话"
+        apiClient.createSession("", characterId) { success, msg, session ->
             if (success && session != null) {
                 callback(session.sessionId)
             } else {
@@ -207,7 +227,9 @@ class ChatActivity : AppCompatActivity() {
         }
 
         bubbleLayout.addView(textView)
+        
         messageLayout.addView(bubbleLayout)
+        messageLayout.addView(createMessageActionBar(message, true))
         findViewById<LinearLayout>(R.id.ll_welcome_message)?.addView(messageLayout)
         scrollToBottom()
     }
@@ -283,8 +305,10 @@ class ChatActivity : AppCompatActivity() {
         }
 
         bubbleLayout.addView(messageText)
+        
         messageLayout.addView(headerLayout)
         messageLayout.addView(bubbleLayout)
+        messageLayout.addView(createMessageActionBar(message, false))
         findViewById<LinearLayout>(R.id.ll_welcome_message)?.addView(messageLayout)
         scrollToBottom()
     }
@@ -367,10 +391,140 @@ class ChatActivity : AppCompatActivity() {
         return findViewById<LinearLayout>(R.id.ll_welcome_message)?.indexOfChild(messageLayout) ?: -1
     }
 
+    // 创建消息操作栏（复制、点赞、点踩）
+    private fun createMessageActionBar(message: String, isUser: Boolean): View {
+        val actionBar = LinearLayout(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(0, 6, 0, 0)
+            }
+            orientation = LinearLayout.HORIZONTAL
+            gravity = android.view.Gravity.CENTER_VERTICAL
+        }
+
+        val iconSize = 28
+        val iconPadding = 4
+
+        // 复制按钮
+        val copyBtn = ImageView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(iconSize, iconSize)
+            setImageResource(R.drawable.icon_copy)
+            setPadding(iconPadding, iconPadding, iconPadding, iconPadding)
+            setOnClickListener {
+                copyToClipboard(message)
+            }
+        }
+
+        // 分隔线
+        val divider1 = View(this).apply {
+            layoutParams = LinearLayout.LayoutParams(1, 14).apply {
+                setMargins(4, 0, 4, 0)
+            }
+            setBackgroundColor(resources.getColor(R.color.line_gray, theme))
+        }
+
+        // 点赞按钮
+        val likeBtn = ImageView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(iconSize, iconSize)
+            setImageResource(R.drawable.icon_like)
+            setPadding(iconPadding, iconPadding, iconPadding, iconPadding)
+            setOnClickListener {
+                Toast.makeText(this@ChatActivity, "已点赞", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // 分隔线
+        val divider2 = View(this).apply {
+            layoutParams = LinearLayout.LayoutParams(1, 14).apply {
+                setMargins(4, 0, 4, 0)
+            }
+            setBackgroundColor(resources.getColor(R.color.line_gray, theme))
+        }
+
+        // 点踩按钮
+        val dislikeBtn = ImageView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(iconSize, iconSize)
+            setImageResource(R.drawable.icon_dislike)
+            setPadding(iconPadding, iconPadding, iconPadding, iconPadding)
+            setOnClickListener {
+                Toast.makeText(this@ChatActivity, "已点踩", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        actionBar.addView(copyBtn)
+        actionBar.addView(divider1)
+        actionBar.addView(likeBtn)
+        actionBar.addView(divider2)
+        actionBar.addView(dislikeBtn)
+
+        return actionBar
+    }
+
+    // 添加到剪贴板
+    private fun copyToClipboard(text: String) {
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("消息内容", text)
+        clipboard.setPrimaryClip(clip)
+        Toast.makeText(this, "已复制到剪贴板", Toast.LENGTH_SHORT).show()
+    }
+
     // 滚动到底部
     private fun scrollToBottom() {
         findViewById<ScrollView>(R.id.scrollView)?.post {
             findViewById<ScrollView>(R.id.scrollView)?.fullScroll(ScrollView.FOCUS_DOWN)
+        }
+    }
+
+    // 加载会话详情
+    private fun loadSessionDetail(sessionId: String) {
+        apiClient.getSessionDetail(sessionId) { success, msg, sessionDetail ->
+            runOnUiThread {
+                if (success && sessionDetail != null) {
+                    // 清空聊天区域
+                    val chatContainer = findViewById<LinearLayout>(R.id.ll_welcome_message)
+                    chatContainer?.removeAllViews()
+
+                    // 加载历史消息，智能纠正后端返回的错误顺序
+                    val messages = sessionDetail.messages
+                    val correctedMessages = if (messages.size >= 2) {
+                        // 检查第一条消息：如果是AI消息（isUser=false），说明顺序反了
+                        val isFirstMessageWrong = !messages[0].isUser
+                        if (isFirstMessageWrong) {
+                            // 反转消息列表，纠正顺序
+                            messages.reversed()
+                        } else {
+                            messages
+                        }
+                    } else {
+                        messages
+                    }
+
+                    for (message in correctedMessages) {
+                        if (message.isUser) {
+                            addUserMessage(message.content)
+                        } else {
+                            addAiMessage(message.content)
+                        }
+                    }
+
+                    // 如果有角色ID，更新角色名称
+                    if (sessionDetail.characterId.isNotEmpty()) {
+                        apiClient.getCharacterDetail(sessionDetail.characterId) { charSuccess, charMsg, character ->
+                            runOnUiThread {
+                                if (charSuccess && character != null) {
+                                    characterName = character.name
+                                    findViewById<TextView>(R.id.tv_ai_name)?.text = character.name
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    // 加载失败，显示欢迎消息
+                    addWelcomeMessage()
+                }
+            }
         }
     }
 

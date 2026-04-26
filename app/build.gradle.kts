@@ -61,6 +61,9 @@ dependencies {
     // 网络请求（OkHttp）
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
+    // RecyclerView
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+
     // MQTT客户端 - 只保留正确且兼容的版本
     implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
     implementation("org.eclipse.paho:org.eclipse.paho.android.service:1.1.1") // 保留这个版本

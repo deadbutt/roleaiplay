@@ -22,15 +22,6 @@
         android:textAllCaps="true"
         android:gravity="center" />
 
-    <!-- 编辑按钮 -->
-    <ImageButton
-        android:id="@+id/btn_edit"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_edit_note"
-        android:contentDescription="@string/edit_character" />
-
     <FrameLayout
         android:id="@+id/profile_container"
         android:layout_width="32dp"
