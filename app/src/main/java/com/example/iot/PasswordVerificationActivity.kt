@@ -165,6 +165,7 @@ class PasswordVerificationActivity : AppCompatActivity() {
                 val json = JSONObject().apply {
                     put("email", userEmail)
                     put("code", code)
+                    put("type", "reset_password")
                 }
                 val body = json.toString().toRequestBody(JSON)
 

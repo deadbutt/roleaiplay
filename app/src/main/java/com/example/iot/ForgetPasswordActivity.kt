@@ -35,6 +35,18 @@ class ForgetPasswordActivity : AppCompatActivity() {
         ctvError = findViewById(R.id.ctv_forget_password_error)
         ctvSubmit = findViewById(R.id.ctv_forget_password_submit)
 
+        // 初始状态禁用提交按钮
+        updateSubmitButtonState()
+
+        // 监听邮箱输入变化
+        etEmail.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: android.text.Editable?) {
+                updateSubmitButtonState()
+            }
+        })
+
         // 提交按钮点击事件
         ctvSubmit.setOnClickListener { sendVerificationCode() }
     }
@@ -115,5 +127,19 @@ class ForgetPasswordActivity : AppCompatActivity() {
         val intent = Intent(this, PasswordVerificationActivity::class.java)
         intent.putExtra("email", email)
         startActivity(intent)
+    }
+
+    // 更新提交按钮状态
+    private fun updateSubmitButtonState() {
+        val email = etEmail.text.toString().trim()
+        if (email.isNotEmpty() && isValidEmail(email)) {
+            ctvSubmit.isEnabled = true
+            ctvSubmit.setTextColor(resources.getColor(R.color.white))
+            ctvSubmit.setBackgroundResource(R.drawable.xml_login_button_back)
+        } else {
+            ctvSubmit.isEnabled = false
+            ctvSubmit.setTextColor(resources.getColor(R.color.gray_button_back))
+            ctvSubmit.setBackgroundResource(R.drawable.xml_login_button_gray_back)
+        }
     }
 }
