@@ -11,10 +11,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import org.json.JSONObject
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
+import com.example.iot.network.HttpClient
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -26,7 +26,7 @@ class RegisterActivity : AppCompatActivity() {
     private var isAgreementChecked = false
 
     // 后端接口地址
-    private val BASE_URL = "http://47.118.22.220:8091/api/"
+    private val BASE_URL = "https://47.118.22.220:8443/api/"
     private val JSON = "application/json; charset=utf-8".toMediaType()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,7 +99,7 @@ class RegisterActivity : AppCompatActivity() {
 
         Thread {
             try {
-                val client = OkHttpClient()
+                val client = HttpClient.client
                 val json = JSONObject().apply {
                     put("email", email)
                     put("type", "register")

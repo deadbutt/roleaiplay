@@ -14,11 +14,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import org.json.JSONObject
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.util.concurrent.TimeUnit
 import java.io.IOException
 import com.example.iot.network.ApiClient
+import com.example.iot.network.HttpClient
 
 class LoginActivity : AppCompatActivity() {
 
@@ -35,8 +36,7 @@ class LoginActivity : AppCompatActivity() {
     private var isAgreementChecked = false
     private var isPasswordVisible = false
 
-    // 后端接口地址
-    private val BASE_URL = "http://47.118.22.220:8091/api/"
+    private val BASE_URL = "https://47.118.22.220:8443/api/"
     private val JSON = "application/json; charset=utf-8".toMediaType()
 
     // 登录状态管理
@@ -139,7 +139,7 @@ class LoginActivity : AppCompatActivity() {
 
         Thread {
             try {
-                val client = OkHttpClient()
+                val client = HttpClient.client
                 val json = JSONObject().apply {
                     put("email", email)
                     put("password", password)
@@ -157,10 +157,6 @@ class LoginActivity : AppCompatActivity() {
                     val resJson = JSONObject(result)
                     val msg = resJson.getString("msg")
 
-                    // 打印完整响应用于调试
-                    android.util.Log.d("LoginResponse", "完整响应: $result")
-
-                    // 尝试获取token，后端可能放在不同字段中
                     val token = when {
                         resJson.has("token") -> resJson.getString("token")
                         resJson.has("data") && resJson.getJSONObject("data").has("token") ->
@@ -170,20 +166,15 @@ class LoginActivity : AppCompatActivity() {
 
                     Handler(Looper.getMainLooper()).post {
                         if (resJson.optInt("code") == 200 || msg.contains("成功")) {
-                            // 保存用户名
                             apiClient.saveUsername(email)
-                            // 保存token（如果有就用后端的，没有就用邮箱）
                             if (token.isNotEmpty()) {
                                 apiClient.saveToken(token)
-                                android.util.Log.d("LoginResponse", "使用后端返回的Token: ${token.take(20)}...")
                             } else {
                                 apiClient.saveToken(email)
-                                android.util.Log.d("LoginResponse", "后端未返回Token，使用邮箱作为标识: $email")
                             }
 
                             Toast.makeText(this@LoginActivity, "登录成功", Toast.LENGTH_SHORT).show()
-                            // 跳转到ChatActivity
-                            val intent = Intent(this@LoginActivity, ChatActivity::class.java)
+                            val intent = Intent(this@LoginActivity, MainHomeActivity::class.java)
                             startActivity(intent)
                             finish()
                         } else {
@@ -191,8 +182,6 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
                 } else {
-                    val errorBody = response.body?.string() ?: "未知错误"
-                    android.util.Log.e("LoginResponse", "请求失败: ${response.code}, $errorBody")
                     Handler(Looper.getMainLooper()).post {
                         Toast.makeText(this@LoginActivity, "登录失败：${response.code}", Toast.LENGTH_SHORT).show()
                     }

@@ -62,6 +62,7 @@ class ChatActivity : AppCompatActivity() {
             val ivSettings = findViewById<ImageView>(R.id.iv_chat_settings)
             val ivMenu = findViewById<ImageView>(R.id.iv_chat_menu)
             val ivNewSession = findViewById<ImageView>(R.id.iv_new_session)
+            val ivBackHome = findViewById<ImageView>(R.id.iv_back_home)
             val etInput = findViewById<EditText>(R.id.cet_message_input)
 
             // 如果有会话ID，加载历史消息
@@ -107,6 +108,14 @@ class ChatActivity : AppCompatActivity() {
             ivSettings?.setOnClickListener {
                 val intent = Intent(this@ChatActivity, SettingsActivity::class.java)
                 startActivity(intent)
+            }
+
+            // 返回设备首页按钮
+            ivBackHome?.setOnClickListener {
+                val intent = Intent(this@ChatActivity, MainHomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                startActivity(intent)
+                finish()
             }
 
             // 菜单按钮 - 跳转到历史会话

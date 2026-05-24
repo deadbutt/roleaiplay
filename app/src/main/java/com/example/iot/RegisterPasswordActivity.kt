@@ -13,10 +13,10 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import org.json.JSONObject
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
+import com.example.iot.network.HttpClient
 
 class RegisterPasswordActivity : AppCompatActivity() {
 
@@ -33,7 +33,7 @@ class RegisterPasswordActivity : AppCompatActivity() {
     private var verificationCode: String = ""
 
     // 后端接口地址
-    private val BASE_URL = "http://47.118.22.220:8091/api/"
+    private val BASE_URL = "https://47.118.22.220:8443/api/"
     private val JSON = "application/json; charset=utf-8".toMediaType()
 
     // 登录状态管理
@@ -153,7 +153,7 @@ class RegisterPasswordActivity : AppCompatActivity() {
 
         Thread {
             try {
-                val client = OkHttpClient()
+                val client = HttpClient.client
                 val json = JSONObject().apply {
                     put("email", userEmail)
                     put("password", password)
@@ -204,7 +204,7 @@ class RegisterPasswordActivity : AppCompatActivity() {
     private fun autoLogin(username: String, password: String) {
         Thread {
             try {
-                val client = OkHttpClient()
+                val client = HttpClient.client
                 val json = JSONObject().apply {
                     put("email", username)
                     put("password", password)

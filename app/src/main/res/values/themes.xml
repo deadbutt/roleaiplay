@@ -6,4 +6,9 @@
     </style>
 
     <style name="Theme.Iot" parent="Base.Theme.Iot" />
+
+    <!-- 头像圆角样式 -->
+    <style name="RoundedSquare">
+        <item name="cornerSize">12dp</item>
+    </style>
 </resources>

@@ -1,0 +1,20 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- 外部轮廓：房子的形状代表“主页/总台” -->
+    <path
+        android:fillColor="#2C3E50"
+        android:pathData="M12,3L4,9V21H20V9L12,3ZM18,19H6V10L12,5.5L18,10V19Z"/>
+
+    <!-- 内部核心：一个圆点加四向发射线，代表主控中心连接所有子设备 -->
+    <path
+        android:fillColor="#1976D2"
+        android:pathData="M12,12m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"/>
+
+    <path
+        android:fillColor="#1976D2"
+        android:pathData="M11,9h2v2h-2zM11,13h2v2h-2zM14,11h2v2h-2zM8,11h2v2h-2z"/>
+</vector>

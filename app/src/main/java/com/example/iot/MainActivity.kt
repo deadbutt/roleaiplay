@@ -22,8 +22,8 @@ class MainActivity : AppCompatActivity() {
         // 检查是否已登录（有Token）
         val token = apiClient.getToken()
         if (token.isNotEmpty()) {
-            // 有Token，直接跳转到ChatActivity
-            val intent = Intent(this@MainActivity, ChatActivity::class.java)
+            // 有Token，直接跳转到MainHomeActivity（设备首页）
+            val intent = Intent(this@MainActivity, MainHomeActivity::class.java)
             startActivity(intent)
             finish()
             return

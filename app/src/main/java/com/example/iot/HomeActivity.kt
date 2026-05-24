@@ -15,9 +15,10 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import org.json.JSONObject
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.IOException
+import com.example.iot.network.HttpClient
 import java.util.concurrent.TimeUnit
 
 class HomeActivity : AppCompatActivity() {
@@ -34,7 +35,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var chatHistoryScroll: ScrollView
 
     // 后端接口地址
-    private val BASE_URL = "http://47.118.22.220:8091/api/"
+    private val BASE_URL = "https://47.118.22.220:8443/api/"
     private val JSON = "application/json; charset=utf-8".toMediaType()
 
     private val handler = Handler(Looper.getMainLooper())
@@ -112,10 +113,7 @@ class HomeActivity : AppCompatActivity() {
     private fun fetchDeviceData() {
         Thread {
             try {
-                val client = OkHttpClient.Builder()
-                    .connectTimeout(5, TimeUnit.SECONDS)
-                    .readTimeout(5, TimeUnit.SECONDS)
-                    .build()
+                val client = HttpClient.client
 
                 val request = Request.Builder()
                     .url("${BASE_URL}device/data")
@@ -185,10 +183,7 @@ class HomeActivity : AppCompatActivity() {
 
         Thread {
             try {
-                val client = OkHttpClient.Builder()
-                    .connectTimeout(10, TimeUnit.SECONDS)
-                    .readTimeout(10, TimeUnit.SECONDS)
-                    .build()
+                val client = HttpClient.client
 
                 val json = JSONObject().apply {
                     put("text", text)
@@ -299,10 +294,7 @@ class HomeActivity : AppCompatActivity() {
 
         Thread {
             try {
-                val client = OkHttpClient.Builder()
-                    .connectTimeout(10, TimeUnit.SECONDS)
-                    .readTimeout(10, TimeUnit.SECONDS)
-                    .build()
+                val client = HttpClient.client
 
                 val json = JSONObject().apply {
                     put("device_id", DEVICE_ID)

@@ -6,28 +6,22 @@ import android.graphics.BitmapFactory
 import com.example.iot.model.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
-import java.util.concurrent.TimeUnit
 
 class ApiClient(private val context: Context) {
 
     companion object {
-        private const val BASE_URL = "http://47.118.22.220:8091/api/"
+        private const val BASE_URL = "https://47.118.22.220:8443/api/"
         private val JSON = "application/json; charset=utf-8".toMediaType()
 
-        // SharedPreferences配置
-        private const val PREFS_NAME = "login_prefs"
+        private const val PREFS_NAME = "secure_prefs"
         private const val KEY_TOKEN = "token"
         private const val KEY_USERNAME = "username"
     }
 
-    private val client = OkHttpClient.Builder()
-        .connectTimeout(15, TimeUnit.SECONDS)
-        .readTimeout(15, TimeUnit.SECONDS)
-        .build()
+    private val client = HttpClient.client
 
     // 获取Token
     fun getToken(): String {
