@@ -23,7 +23,7 @@ class WebSocketManager private constructor() {
     private var onConnectionListener: ((Boolean) -> Unit)? = null
     
     companion object {
-        private const val WS_URL = "wss://47.118.22.220:8443/ws"
+        private const val WS_URL = "wss://bolank.asia/ws"
         
         @Volatile
         private var instance: WebSocketManager? = null

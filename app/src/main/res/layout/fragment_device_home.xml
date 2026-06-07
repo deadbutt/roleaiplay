@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="8 个设备在线"
+                android:text="设备在线"
                 android:textColor="#80FFFFFF"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -101,18 +101,28 @@
                     <FrameLayout
                         android:layout_width="50dp"
                         android:layout_height="90dp"
-                        android:layout_marginTop="12dp">
+                        android:layout_marginTop="12dp"
+                        android:clipChildren="true">
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/shape_battery_vessel" />
 
-                        <View
+                        <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_margin="4dp"
-                            android:background="@drawable/shape_battery_fill" />
+                            android:layout_gravity="bottom"
+                            android:clipChildren="true">
+
+                            <View
+                                android:id="@+id/view_battery_fill"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_gravity="bottom"
+                                android:background="@drawable/shape_battery_fill" />
+                        </FrameLayout>
                     </FrameLayout>
 
                     <TextView
@@ -179,13 +189,22 @@
 
                     <TextView
                         android:id="@+id/tv_humidity_value"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
+                        android:layout_weight="1"
                         android:text="45%"
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_humidifier"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:thumbTint="#39FF14"
+                        android:trackTint="#30FFFFFF" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -228,6 +247,7 @@
                                 android:progressDrawable="@drawable/circle_progress_bg" />
 
                             <ProgressBar
+                                android:id="@+id/progress_voc"
                                 style="?android:attr/progressBarStyleHorizontal"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -266,6 +286,7 @@
                                 android:progressDrawable="@drawable/circle_progress_bg" />
 
                             <ProgressBar
+                                android:id="@+id/progress_co2"
                                 style="?android:attr/progressBarStyleHorizontal"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -304,6 +325,7 @@
                                 android:progressDrawable="@drawable/circle_progress_bg" />
 
                             <ProgressBar
+                                android:id="@+id/progress_hcho"
                                 style="?android:attr/progressBarStyleHorizontal"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -415,7 +437,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:letterSpacing="0.05"
-                        android:text="离心机"
+                        android:text="电机"
                         android:textColor="#80FFFFFF"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -481,15 +503,16 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/shape_light_slider">
+                    android:layout_marginTop="8dp">
 
-                    <View
-                        android:layout_width="70dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="10dp"
-                        android:background="@drawable/shape_light_fill" />
+                    <androidx.appcompat.widget.AppCompatSeekBar
+                        android:id="@+id/seekbar_light"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:max="100"
+                        android:progress="70"
+                        android:progressDrawable="@drawable/shape_light_slider"
+                        android:thumb="@drawable/shape_light_thumb" />
                 </FrameLayout>
             </LinearLayout>
 

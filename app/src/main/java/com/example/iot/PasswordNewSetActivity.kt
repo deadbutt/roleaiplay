@@ -32,7 +32,7 @@ class PasswordNewSetActivity : AppCompatActivity() {
     private var verificationCode: String = ""
 
     // 后端接口地址
-    private val BASE_URL = "https://47.118.22.220:8443/api/"
+    private val BASE_URL = "https://bolank.asia/api/"
     private val JSON = "application/json; charset=utf-8".toMediaType()
 
     // 密码可见性状态

@@ -13,7 +13,7 @@ import org.json.JSONObject
 class ApiClient(private val context: Context) {
 
     companion object {
-        private const val BASE_URL = "https://47.118.22.220:8443/api/"
+        private const val BASE_URL = "https://bolank.asia/api/"
         private val JSON = "application/json; charset=utf-8".toMediaType()
 
         private const val PREFS_NAME = "secure_prefs"

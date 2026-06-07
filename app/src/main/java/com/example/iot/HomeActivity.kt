@@ -35,7 +35,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var chatHistoryScroll: ScrollView
 
     // 后端接口地址
-    private val BASE_URL = "https://47.118.22.220:8443/api/"
+    private val BASE_URL = "https://bolank.asia/api/"
     private val JSON = "application/json; charset=utf-8".toMediaType()
 
     private val handler = Handler(Looper.getMainLooper())

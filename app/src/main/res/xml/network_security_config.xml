@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
+    <!-- 基础配置：默认允许明文传输（用于MQTT等非加密连接） -->
     <base-config cleartextTrafficPermitted="true">
         <trust-anchors>
             <certificates src="system" />
         </trust-anchors>
     </base-config>
-    
-    <domain-config cleartextTrafficPermitted="false">
+
+    <!-- bolank.asia 域名配置：允许明文传输 -->
+    <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">bolank.asia</domain>
         <trust-anchors>
             <certificates src="system" />
         </trust-anchors>
-    </domain-config>
-    
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">47.118.22.220</domain>
     </domain-config>
 </network-security-config>

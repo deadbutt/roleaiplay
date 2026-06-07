@@ -215,7 +215,7 @@ fun onAvatarClick(character: Character) {
 
 **基础 URL：**
 ```
-http://47.118.22.220:8091/api/
+http://bolank.asia:8091/api/
 ```
 
 **请求格式：**

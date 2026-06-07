@@ -36,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
     private var isAgreementChecked = false
     private var isPasswordVisible = false
 
-    private val BASE_URL = "https://47.118.22.220:8443/api/"
+    private val BASE_URL = "https://bolank.asia/api/"
     private val JSON = "application/json; charset=utf-8".toMediaType()
 
     // 登录状态管理
