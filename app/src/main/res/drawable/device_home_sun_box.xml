@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- sun-box: width: 74px; height: 74px; border-radius: 17px; border: 1px solid rgba(255, 220, 181, .25) -->
+<!-- background: linear-gradient(145deg, rgba(255,255,255,.08), rgba(0,0,0,.2)) -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="17dp" />
+    <gradient android:angle="145" android:startColor="#14FFFFFF" android:endColor="#33000000" />
+    <stroke android:width="1dp" android:color="#40FFDCB5" />
+</shape>

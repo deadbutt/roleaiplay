@@ -6,9 +6,9 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.MotionEvent
 import android.widget.FrameLayout
 import android.widget.ProgressBar
-import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
@@ -36,9 +36,12 @@ class DeviceHomeFragment : Fragment() {
     private lateinit var progressCo2: ProgressBar
     private lateinit var progressHcho: ProgressBar
     private lateinit var viewBatteryFill: View
+    private lateinit var viewWaterContainer: View
 
     private lateinit var switchHumidifier: SwitchCompat
-    private lateinit var seekBarLight: SeekBar
+    private lateinit var sliderTouchArea: View
+    private lateinit var trackProgress: View
+    private lateinit var thumbView: View
 
     private lateinit var wsManager: WebSocketManager
 
@@ -76,12 +79,16 @@ class DeviceHomeFragment : Fragment() {
         progressCo2 = view.findViewById(R.id.progress_co2)
         progressHcho = view.findViewById(R.id.progress_hcho)
         viewBatteryFill = view.findViewById(R.id.view_battery_fill)
+        viewWaterContainer = view.findViewById(R.id.view_water_container)
 
         switchHumidifier = view.findViewById(R.id.switch_humidifier)
-        seekBarLight = view.findViewById(R.id.seekbar_light)
+        sliderTouchArea = view.findViewById(R.id.slider_touch_area)
+        trackProgress = view.findViewById(R.id.track_progress)
+        thumbView = view.findViewById(R.id.thumb)
 
         initControls()
         updateBatteryUI(85)
+        updateLightSliderUI(lastLightValue)
     }
 
     private fun updateBatteryUI(batteryPercent: Int) {
@@ -99,30 +106,63 @@ class DeviceHomeFragment : Fragment() {
         }
     }
 
+    private fun updateWaterTankUI(waterPercent: Int) {
+        val percent = waterPercent.coerceIn(0, 100)
+        tvWater?.text = "$percent%"
+
+        viewWaterContainer?.post {
+            val tankBody = viewWaterContainer.parent as? FrameLayout
+            val containerHeight = tankBody?.height ?: 140
+            if (containerHeight > 0) {
+                val fillHeight = (containerHeight * percent / 100.0).toInt()
+                viewWaterContainer?.layoutParams?.height = fillHeight.coerceIn(0, containerHeight)
+                viewWaterContainer?.requestLayout()
+            }
+        }
+    }
+
     private fun initControls() {
         switchHumidifier.setOnCheckedChangeListener { _, isChecked ->
             val cmd = if (isChecked) "water_pump:on" else "water_pump:off"
             sendCommand(cmd)
         }
 
-        seekBarLight.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (fromUser) {
+        sliderTouchArea.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
                     isUserChangingLight = true
-                    lastLightValue = progress
-                    tvLight?.text = "$progress%"
+                    val width = sliderTouchArea.width.toFloat()
+                    if (width > 0) {
+                        val percent = ((event.x / width) * 100).toInt().coerceIn(0, 100)
+                        lastLightValue = percent
+                        tvLight?.text = "$percent%"
+                        updateLightSliderUI(percent)
+                    }
+                    true
                 }
+                MotionEvent.ACTION_UP -> {
+                    isUserChangingLight = false
+                    sendCommand("light:$lastLightValue")
+                    true
+                }
+                else -> false
             }
+        }
+    }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                isUserChangingLight = true
-            }
+    private fun updateLightSliderUI(percent: Int) {
+        val p = percent.coerceIn(0, 100)
+        sliderTouchArea?.post {
+            val width = sliderTouchArea.width
+            if (width > 0) {
+                val progressWidth = (width * p / 100.0).toInt()
+                trackProgress?.layoutParams?.width = progressWidth.coerceIn(0, width)
+                trackProgress?.requestLayout()
 
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                isUserChangingLight = false
-                sendCommand("light:$lastLightValue")
+                val thumbX = (width * p / 100.0).toInt()
+                thumbView?.translationX = (thumbX - thumbView.width / 2.0).toFloat()
             }
-        })
+        }
     }
     
     private fun initWebSocket() {
@@ -168,9 +208,9 @@ class DeviceHomeFragment : Fragment() {
                 tvHumidity?.text = "${String.format("%.1f", hum)}%"
                 if (!isUserChangingLight) {
                     tvLight?.text = lightStr
-                    seekBarLight?.progress = lightValue
+                    updateLightSliderUI(lightValue)
                 }
-                tvWater?.text = "$water%"
+                updateWaterTankUI(water)
                 tvMotor?.text = "$motor RPM"
                 tvVoc?.text = "VOC: $voc"
                 tvCo2?.text = "CO₂: $co2"

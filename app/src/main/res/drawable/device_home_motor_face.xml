@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 电机表盘: width: 264px; height: 264px; border-radius: 50% -->
+<!-- background: radial-gradient(circle, #101217 0 47%, transparent 48%), repeating-conic-gradient, conic-gradient -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 外圈刻度线: repeating-conic-gradient(from -2deg, rgba(255,225,190,.9) 0 2.4deg, transparent 2.6deg 5deg) -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#101217" />
+            <stroke android:width="8dp" android:color="#E6FFE1B8" />
+        </shape>
+    </item>
+    <!-- 内圈边框: inset: 21px; border: 1px solid rgba(255, 217, 176, .34) -->
+    <item android:left="21dp" android:right="21dp" android:top="21dp" android:bottom="21dp">
+        <shape android:shape="oval">
+            <solid android:color="#101217" />
+            <stroke android:width="1dp" android:color="#57FFD9B0" />
+        </shape>
+    </item>
+</layer-list>

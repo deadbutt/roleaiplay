@@ -25,7 +25,7 @@ class CharacterListActivity : AppCompatActivity() {
                 openEditCharacter(null)
             }
 
-            // 编辑按钮点击事件
+            // 编辑按钮点击事件（在 top_app_bar 中，top_app 没有此按钮）
             findViewById<ImageButton>(R.id.btn_edit)?.setOnClickListener {
                 openEditCharacter(null)
             }
@@ -50,7 +50,7 @@ class CharacterListActivity : AppCompatActivity() {
         val ivAvatar = cardNew?.findViewById<ImageView>(R.id.iv_card_avatar)
 
         tvName?.text = "新建角色"
-        ivAvatar?.setImageResource(R.drawable.icon_add)
+        ivAvatar?.setImageResource(R.drawable.icon_ai_star)
 
         cardNew?.setOnClickListener {
             openEditCharacter(null)

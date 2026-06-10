@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <corners
-        android:bottomLeftRadius="15dp"
-        android:bottomRightRadius="15dp" />
-    <solid android:color="#6000D2FF" />
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 水面椭圆: top: -22px; height: 43px; border-radius: 50%; background: rgba(255, 232, 208, .82) -->
+    <item android:top="-14dp" android:bottom="50dp" android:left="-6dp" android:right="-6dp">
+        <shape android:shape="oval">
+            <solid android:color="#D1FFE8D0" />
+        </shape>
+    </item>
+    <!-- 水体: linear-gradient(180deg, rgba(255, 232, 204, .74), rgba(180, 126, 68, .48)) -->
+    <item android:top="6dp">
+        <shape android:shape="rectangle">
+            <gradient android:angle="270" android:startColor="#BDFFE8CC" android:endColor="#7AB47E44" />
+        </shape>
+    </item>
+</layer-list>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- leaf: width: 18px; height: 18px; border: 2px solid #8ccf82; border-radius: 14px 0 14px 0; transform: rotate(-18deg) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="18dp"
+    android:height="18dp"
+    android:viewportWidth="18"
+    android:viewportHeight="18">
+    <path
+        android:pathData="M2,2 Q14,2 14,14 Q2,14 2,2"
+        android:strokeColor="#8CCF82"
+        android:strokeWidth="2"
+        android:fillColor="#00000000" />
+    <path
+        android:pathData="M3,11 L8,6"
+        android:strokeColor="#8CCF82"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:strokeAlpha="0.7" />
+</vector>

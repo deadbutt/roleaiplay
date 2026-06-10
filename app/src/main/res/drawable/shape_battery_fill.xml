@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <corners
-        android:bottomLeftRadius="4dp"
-        android:bottomRightRadius="4dp"
-        android:topLeftRadius="0dp"
-        android:topRightRadius="0dp" />
-    <gradient
-        android:angle="90"
-        android:endColor="#9eff8a"
-        android:startColor="#39ff14" />
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 电量填充: border-radius: 8px 8px 16px 16px; linear-gradient(180deg, #ffe2bc 0%, #ffca8d 46%, #f2af62 100%) -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:topLeftRadius="6dp" android:topRightRadius="6dp" android:bottomLeftRadius="12dp" android:bottomRightRadius="12dp" />
+            <gradient android:angle="270" android:startColor="#FFE2BC" android:centerColor="#FFCA8D" android:centerY="0.46" android:endColor="#F2AF62" />
+        </shape>
+    </item>
+    <!-- 顶部椭圆高光 -->
+    <item android:top="-4dp" android:bottom="100dp" android:left="0dp" android:right="0dp">
+        <shape android:shape="oval">
+            <solid android:color="#E6FFEFDC" />
+        </shape>
+    </item>
+</layer-list>

@@ -78,3 +78,16 @@
     public static *** v(...);
     public static *** i(...);
 }
+
+# 保留 LazySodium（Curve25519 密钥交换）
+-keep class com.goterl.lazysodium.** { *; }
+-keep class com.goterl.lazysodium.interfaces.** { *; }
+-keep class com.goterl.lazysodium.utils.** { *; }
+
+# 保留 JNA（LazySodium 内部依赖）
+-keep class com.sun.jna.** { *; }
+-keep class com.sun.jna.ptr.** { *; }
+-dontwarn com.sun.jna.**
+
+# 保留 Protobuf 消息类（ProtoDecoder 使用反射）
+-keep class com.example.iot.ble.proto.** { *; }

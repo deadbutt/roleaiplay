@@ -110,10 +110,11 @@ class ChatActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
-            // 返回设备首页按钮
+            // 返回主界面按钮（回到设备页）
             ivBackHome?.setOnClickListener {
                 val intent = Intent(this@ChatActivity, MainHomeActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                intent.putExtra("tab_index", 0) // 0 = 设备页
                 startActivity(intent)
                 finish()
             }

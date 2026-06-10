@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- thumb: width: 38px; height: 38px; border-radius: 50%; background: #f7f7f7; border: 3px solid #ffd29a -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
-    <solid android:color="#FFFFFF" />
-    <size
-        android:width="20dp"
-        android:height="20dp" />
+    <solid android:color="#F7F7F7" />
+    <stroke android:width="3dp" android:color="#FFD29A" />
+    <size android:width="38dp" android:height="38dp" />
 </shape>

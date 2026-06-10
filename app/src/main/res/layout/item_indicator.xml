@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    android:gravity="center">
+
+    <View
+        android:id="@+id/view_indicator_selected"
+        android:layout_width="21dp"
+        android:layout_height="8dp"
+        android:background="@drawable/xml_user_avatar_bg"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/view_indicator_normal"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:background="@drawable/xml_white_circle_back"
+        android:alpha="0.3" />
+
+</LinearLayout>

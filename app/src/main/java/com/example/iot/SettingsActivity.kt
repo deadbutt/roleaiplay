@@ -18,6 +18,11 @@ class SettingsActivity : AppCompatActivity() {
 
         apiClient = ApiClient(this)
 
+        // 设置用户邮箱
+        val tvUserEmail = findViewById<android.widget.TextView>(R.id.tv_user_email)
+        val email = apiClient.getUsername()
+        tvUserEmail?.text = if (email.isNotEmpty()) email else "未设置邮箱"
+
         try {
             // 返回按钮
             findViewById<android.widget.ImageView>(R.id.iv_settings_back)?.setOnClickListener {

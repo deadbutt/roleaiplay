@@ -1,0 +1,30 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- WiFi信号图标 -->
+    <!-- 第一层信号（最外层） -->
+    <path
+        android:fillColor="#2C3E50"
+        android:pathData="M12,18C10.34,18 9,19.34 9,21C9,22.66 10.34,24 12,24C13.66,24 15,22.66 15,21C15,19.34 13.66,18 12,18Z" />
+
+    <!-- 第二层信号 -->
+    <path
+        android:fillColor="#2C3E50"
+        android:fillAlpha="0.7"
+        android:pathData="M12,14C8.69,14 6,16.69 6,20C6,20.55 6.45,21 7,21C7.55,21 8,20.55 8,20C8,17.79 9.79,16 12,16C14.21,16 16,17.79 16,20C16,20.55 16.45,21 17,21C17.55,21 18,20.55 18,20C18,16.69 15.31,14 12,14Z" />
+
+    <!-- 第三层信号 -->
+    <path
+        android:fillColor="#2C3E50"
+        android:fillAlpha="0.5"
+        android:pathData="M12,10C6.48,10 2,14.48 2,20C2,20.55 2.45,21 3,21C3.55,21 4,20.55 4,20C4,15.58 7.58,12 12,12C16.42,12 20,15.58 20,20C20,20.55 20.45,21 21,21C21.55,21 22,20.55 22,20C22,14.48 17.52,10 12,10Z" />
+
+    <!-- 第四层信号（最外层，最淡） -->
+    <path
+        android:fillColor="#2C3E50"
+        android:fillAlpha="0.3"
+        android:pathData="M12,6C4.06,6 -2,12.06 -2,20C-2,20.55 -1.55,21 -1,21C-0.45,21 0,20.55 0,20C0,13.37 5.37,8 12,8C18.63,8 24,13.37 24,20C24,20.55 24.45,21 25,21C25.55,21 26,20.55 26,20C26,12.06 19.94,6 12,6Z" />
+</vector>

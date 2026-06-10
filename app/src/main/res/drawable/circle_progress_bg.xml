@@ -4,9 +4,23 @@
         <shape
             android:innerRadiusRatio="2.5"
             android:shape="ring"
-            android:thickness="3dp"
+            android:thickness="6dp"
             android:useLevel="false">
-            <solid android:color="#15FFFFFF" /> <!-- 极淡的白色轨道 -->
+            <solid android:color="#14FFFFFF" />
+        </shape>
+    </item>
+    <item>
+        <shape
+            android:innerRadiusRatio="2.5"
+            android:shape="ring"
+            android:thickness="8dp"
+            android:useLevel="false">
+            <solid android:color="#FF13151A" />
+        </shape>
+    </item>
+    <item android:left="10dp" android:right="10dp" android:top="10dp" android:bottom="10dp">
+        <shape android:shape="oval">
+            <stroke android:width="6dp" android:color="#FF191B20" />
         </shape>
     </item>
 </layer-list>

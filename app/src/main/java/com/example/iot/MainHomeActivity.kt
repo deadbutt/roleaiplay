@@ -6,73 +6,115 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.iot.network.ApiClient
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 
 class MainHomeActivity : AppCompatActivity() {
 
-    private lateinit var navDevice: LinearLayout
-    private lateinit var navAi: LinearLayout
-    private lateinit var ivNavDevice: ImageView
-    private lateinit var ivNavAi: ImageView
-    private lateinit var tvNavDevice: TextView
-    private lateinit var tvNavAi: TextView
+    private lateinit var vpMain: ViewPager2
+    private lateinit var tabDevice: LinearLayout
+    private lateinit var tabAi: LinearLayout
+    private lateinit var tabSettings: LinearLayout
 
-    private lateinit var apiClient: ApiClient
+    private val tabs by lazy { listOf(tabDevice, tabAi, tabSettings) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_home)
 
-        apiClient = ApiClient(this)
-
         initViews()
-        initListeners()
+        setupViewPager()
+        setupTabs()
 
-        // 默认显示设备首页
-        showFragment(DeviceHomeFragment())
-        updateNavState(true)
+        // 处理从其他页面返回时指定 tab
+        val tabIndex = intent.getIntExtra("tab_index", -1)
+        if (tabIndex >= 0) {
+            vpMain.currentItem = tabIndex
+            updateTabStyles(tabIndex)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // 从 ChatActivity 返回时，切回设备页
+        val tabIndex = intent.getIntExtra("tab_index", -1)
+        if (tabIndex >= 0) {
+            switchToTab(tabIndex)
+            intent.removeExtra("tab_index")
+        } else {
+            // 默认显示设备页
+            updateTabStyles(0)
+        }
     }
 
     private fun initViews() {
-        navDevice = findViewById(R.id.nav_device)
-        navAi = findViewById(R.id.nav_ai)
-        ivNavDevice = findViewById(R.id.iv_nav_device)
-        ivNavAi = findViewById(R.id.iv_nav_ai)
-        tvNavDevice = findViewById(R.id.tv_nav_device)
-        tvNavAi = findViewById(R.id.tv_nav_ai)
+        vpMain = findViewById(R.id.vp_main)
+        tabDevice = findViewById(R.id.tab_device)
+        tabAi = findViewById(R.id.tab_ai)
+        tabSettings = findViewById(R.id.tab_settings)
     }
 
-    private fun initListeners() {
-        navDevice.setOnClickListener {
-            showFragment(DeviceHomeFragment())
-            updateNavState(true)
+    private fun setupViewPager() {
+        vpMain.adapter = object : FragmentStateAdapter(this) {
+            override fun getItemCount(): Int = 2 // 只有设备和设置两个 tab
+
+            override fun createFragment(position: Int): Fragment {
+                return when (position) {
+                    0 -> DeviceListFragment()
+                    1 -> SettingsFragment()
+                    else -> DeviceListFragment()
+                }
+            }
         }
 
-        navAi.setOnClickListener {
-            // 跳转到 ChatActivity
-            val intent = Intent(this, ChatActivity::class.java)
+        vpMain.isUserInputEnabled = false
+    }
+
+    private fun setupTabs() {
+        tabDevice.setOnClickListener { 
+            vpMain.currentItem = 0
+            updateTabStyles(0)
+        }
+        tabAi.setOnClickListener { 
+            // AI助手直接打开 ChatActivity，不切换 ViewPager
+            updateTabStyles(1) // 显示选中样式
+            val intent = Intent(this, ChatActivity::class.java).apply {
+                putExtra("characterName", "AI助手")
+            }
             startActivity(intent)
         }
+        tabSettings.setOnClickListener { 
+            vpMain.currentItem = 1
+            updateTabStyles(2)
+        }
     }
 
-    private fun showFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit()
-    }
-
-    private fun updateNavState(isDeviceSelected: Boolean) {
-        if (isDeviceSelected) {
-            ivNavDevice.alpha = 1.0f
-            tvNavDevice.alpha = 1.0f
-            ivNavAi.alpha = 0.5f
-            tvNavAi.alpha = 0.5f
+    fun switchToTab(index: Int) {
+        if (index == 1) {
+            // AI tab 不切换 ViewPager
+            updateTabStyles(1)
         } else {
-            ivNavDevice.alpha = 0.5f
-            tvNavDevice.alpha = 0.5f
-            ivNavAi.alpha = 1.0f
-            tvNavAi.alpha = 1.0f
+            vpMain.currentItem = if (index == 2) 1 else 0
+            updateTabStyles(index)
+        }
+    }
+
+    private fun updateTabStyles(selectedIndex: Int) {
+        tabs.forEachIndexed { index, tab ->
+            val isSelected = index == selectedIndex
+            val bgRes = if (isSelected) R.drawable.xml_home_page_black else 0
+            val textColor = if (isSelected) android.R.color.white else R.color.text_black_99
+            val tintColor = if (isSelected) android.R.color.white else R.color.text_black_99
+
+            tab.background = if (isSelected) ContextCompat.getDrawable(this, bgRes) else null
+
+            val imageView = tab.getChildAt(0) as ImageView
+            val textView = tab.getChildAt(1) as TextView
+
+            imageView.setColorFilter(ContextCompat.getColor(this, tintColor))
+            textView.setTextColor(ContextCompat.getColor(this, textColor))
         }
     }
 }
